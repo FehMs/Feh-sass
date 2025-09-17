@@ -1,0 +1,65 @@
+.page__login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    .login-container{
+        padding: 40px;
+        border-radius: 16px;
+        background: linear-gradient(to bottom, #191f22 0%, #2e3539 100%);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        min-height: 500px;
+        min-width: 300px;
+        .login-form{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            label{
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+                input{
+                    border: none;
+                    background: none;
+                    border-bottom: 0.2px solid #303b41;
+                    width: 100%;
+                    &:focus{
+                        box-shadow: none;
+                        outline: none;
+                    }
+                }
+            }
+            button{
+                transition: all ease 0.3s;
+                position: relative;
+                overflow: hidden;
+                z-index: 1;
+                &:hover{
+                    border: none;
+                    outline: none;
+                    background: linear-gradient(135deg, #8e2de2, #4a00e0, #00c6ff);
+                    &::before{
+                        left: 105%;
+                    }
+                }
+                &::before{
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -95%; /* Começa a pseudo-classe fora do botão */
+                    width: 200%;
+                    height: 100%;
+                    background: rgba(255, 255, 255, 0.3); /* Um brilho branco semi-transparente */
+                    transform: skewX(-30deg);
+                    transition: all ease 0.5s;
+                    z-index: -1;
+                }
+            }
+            .text-reg{
+                font-size: 12px;
+                text-align: left;
+            }
+        }
+    }
+}
