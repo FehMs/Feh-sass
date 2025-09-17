@@ -17,23 +17,36 @@
   min-height: 500px;
   min-width: 300px;
 }
+.page__login .login-container .error-message {
+  color: #901212;
+  margin: 0px;
+}
+.page__login .login-container .text-reg {
+  color: #fff;
+}
 .page__login .login-container .login-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
 }
-.page__login .login-container .login-form label {
+.page__login .login-container .login-form .input-container label {
   display: flex;
   gap: 10px;
   justify-content: center;
+  margin-top: 10px;
+  height: 45px;
 }
-.page__login .login-container .login-form label input {
+.page__login .login-container .login-form .input-container label svg {
+  width: 25px;
+  margin: auto;
+}
+.page__login .login-container .login-form .input-container label input {
   border: none;
   background: none;
   border-bottom: 0.2px solid #303b41;
   width: 100%;
 }
-.page__login .login-container .login-form label input:focus {
+.page__login .login-container .login-form .input-container label input:focus {
   box-shadow: none;
   outline: none;
 }
@@ -66,4 +79,5 @@
 .page__login .login-container .login-form .text-reg {
   font-size: 12px;
   text-align: left;
+  margin-top: 10px;
 }

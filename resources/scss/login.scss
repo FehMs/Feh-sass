@@ -11,22 +11,37 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         min-height: 500px;
         min-width: 300px;
+        .error-message{
+            color: #901212;
+            margin: 0px;
+        }
+        .text-reg{
+            color: #fff;
+        }
         .login-form{
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            label{
-                display: flex;
-                gap: 10px;
-                justify-content: center;
-                input{
-                    border: none;
-                    background: none;
-                    border-bottom: 0.2px solid #303b41;
-                    width: 100%;
-                    &:focus{
-                        box-shadow: none;
-                        outline: none;
+            gap: 5px;
+            .input-container{
+                label{
+                    display: flex;
+                    gap: 10px;
+                    justify-content: center;
+                    margin-top: 10px;
+                    height: 45px;
+                    svg{
+                        width: 25px;
+                        margin: auto;
+                    }
+                    input{
+                        border: none;
+                        background: none;
+                        border-bottom: 0.2px solid #303b41;
+                        width: 100%;
+                        &:focus{
+                            box-shadow: none;
+                            outline: none;
+                        }
                     }
                 }
             }
@@ -59,6 +74,7 @@
             .text-reg{
                 font-size: 12px;
                 text-align: left;
+                margin-top: 10px;
             }
         }
     }

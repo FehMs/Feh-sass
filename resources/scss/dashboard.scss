@@ -1,0 +1,147 @@
+/*--------------------------------------------------
+  VARIÁVEIS DE DESIGN DO DASHBOARD
+--------------------------------------------------*/
+$primary-color: #3b82f6; // Azul para elementos ativos e botões
+$sidebar-bg: #111827;      // Fundo escuro para a sidebar
+$sidebar-text-color: #d1d5db; // Cor do texto da sidebar
+$sidebar-link-hover: #ffffff;
+$sidebar-link-active-bg: rgba(59, 130, 246, 0.2); // Fundo do link ativo
+$main-content-bg: #1f2937; // Cinza claro para o fundo principal
+$card-bg: #ffffff;
+$text-color-dark: #1f2937;
+$text-color-light: #6b7280;
+$border-color: #e5e7eb;
+$sidebar-width: 260px;
+$border-radius: 12px;
+$box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+/*--------------------------------------------------
+  ESTRUTURA PRINCIPAL
+--------------------------------------------------*/
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: $main-content-bg;
+  color: $text-color-dark;
+}
+
+.dashboard-layout {
+  display: grid;
+  // Define o layout: sidebar com largura fixa e conteúdo que ocupa o resto
+  grid-template-columns: $sidebar-width 1fr;
+  height: 100vh;
+}
+
+/*--------------------------------------------------
+  SIDEBAR (BARRA LATERAL)
+--------------------------------------------------*/
+.sidebar {
+  background-color: $sidebar-bg;
+  color: $sidebar-text-color;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+
+  .sidebar-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; // Empurra o rodapé da sidebar para baixo
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      border-radius: $border-radius / 1.5;
+      text-decoration: none;
+      color: $sidebar-text-color;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      i { // Para ícones (ex: Font Awesome)
+        width: 20px;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: $sidebar-link-hover;
+      }
+
+      &.active {
+        background-color: $sidebar-link-active-bg;
+        color: $primary-color;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .sidebar-footer {
+    // Espaço para perfil do usuário, logout, etc.
+    text-align: center;
+    font-size: 13px;
+    color: darken($sidebar-text-color, 30%);
+  }
+}
+
+/*--------------------------------------------------
+  CONTEÚDO PRINCIPAL
+--------------------------------------------------*/
+.main-content {
+  overflow-y: auto; // Adiciona scroll apenas na área de conteúdo
+  padding: 32px;
+
+  .dashboard-header {
+    margin-bottom: 32px;
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0;
+    }
+    
+    p {
+      color: $text-color-light;
+      margin-top: 4px;
+    }
+  }
+}
+
+/*--------------------------------------------------
+  CARDS / WIDGETS
+--------------------------------------------------*/
+.dashboard-grid {
+  display: grid;
+  // Grid responsivo: cria colunas de no mínimo 300px
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background-color: $card-bg;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 24px;
+  border: 1px solid $border-color;
+
+  .card-header {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .card-body {
+    font-size: 15px;
+    color: $text-color-light;
+    line-height: 1.6;
+  }
+}

@@ -5,6 +5,9 @@ const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 const sassFiles = [
     "login.scss",
+    "header.scss",
+    "footer.scss",
+    "dashboard.scss",
 ];
 
 module.exports = (env, argv) => {
