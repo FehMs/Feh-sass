@@ -21,7 +21,7 @@ export default function Header() {
     <header className="app-header">
       <div className="header-container">
         <div className="logo">
-          MeuSaaS
+          NeoWallet
         </div>
         <div className="user-info">
           {/* Mostra o email do usuário se ele estiver logado */}
