@@ -1,147 +1,249 @@
-/*--------------------------------------------------
-  VARIÁVEIS DE DESIGN DO DASHBOARD
---------------------------------------------------*/
-$primary-color: #3b82f6; // Azul para elementos ativos e botões
-$sidebar-bg: #111827;      // Fundo escuro para a sidebar
-$sidebar-text-color: #d1d5db; // Cor do texto da sidebar
-$sidebar-link-hover: #ffffff;
-$sidebar-link-active-bg: rgba(59, 130, 246, 0.2); // Fundo do link ativo
-$main-content-bg: #1f2529; // Cinza claro para o fundo principal
-$card-bg: #ffffff;
-$text-color-dark: #0c1016;
-$text-color-light: #6b7280;
-$border-color: #e5e7eb;
-$sidebar-width: 260px;
-$border-radius: 12px;
-$box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+// --- Variáveis de Cor e Estilo ---
+$bg-main: #1f2529;
+$bg-card: rgba(255, 255, 255, 0.04);
+$text-primary: #E2E8F0;
+$text-secondary: #94A3B8;
+$border-gradient: linear-gradient(120deg, #3B82F6 0%, #9333EA 100%);
+$color-credito: #10B981;
+$color-debito: #F43F5E;
 
-/*--------------------------------------------------
-  ESTRUTURA PRINCIPAL
---------------------------------------------------*/
+// --- Reset Básico e Estilo Global ---
 body {
-  margin: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: $main-content-bg;
-  color: $text-color-dark;
+  background-color: $bg-main;
+  color: $text-primary;
+  font-family: 'Inter', sans-serif; // Adicione a fonte Inter no seu index.html se desejar
 }
 
-.dashboard-layout {
-  display: grid;
-  // Define o layout: sidebar com largura fixa e conteúdo que ocupa o resto
-  grid-template-columns: $sidebar-width 1fr;
-  height: 100vh;
+.dashboard-container {
+  padding: 1.5rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/*--------------------------------------------------
-  SIDEBAR (BARRA LATERAL)
---------------------------------------------------*/
-.sidebar {
-  background-color: $sidebar-bg;
-  color: $sidebar-text-color;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-
-  .sidebar-logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 40px;
-    text-align: center;
+// --- Header Interno do Dashboard ---
+.dashboard-header {
+  margin-bottom: 2rem;
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 1rem;
   }
 
-  .sidebar-nav {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-grow: 1; // Empurra o rodapé da sidebar para baixo
+  .header-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
 
-    a {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      margin-bottom: 8px;
-      border-radius: $border-radius / 1.5;
-      text-decoration: none;
-      color: $sidebar-text-color;
-      font-weight: 500;
+  .header-nav {
+    display: flex;
+    gap: 0.5rem;
+    
+    button {
+      background: transparent;
+      border: 1px solid transparent;
+      color: $text-secondary;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
       transition: all 0.2s ease;
 
-      i { // Para ícones (ex: Font Awesome)
-        width: 20px;
-      }
-
       &:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: $sidebar-link-hover;
+        background: rgba(255, 255, 255, 0.05);
+        color: $text-primary;
       }
 
       &.active {
-        background-color: $sidebar-link-active-bg;
-        color: $primary-color;
-        font-weight: 600;
+        background: $bg-card;
+        color: $text-primary;
+        border: 1px solid rgba(255,255,255,0.1);
       }
     }
   }
-
-  .sidebar-footer {
-    // Espaço para perfil do usuário, logout, etc.
-    text-align: center;
-    font-size: 13px;
-    color: darken($sidebar-text-color, 30%);
-  }
 }
 
-/*--------------------------------------------------
-  CONTEÚDO PRINCIPAL
---------------------------------------------------*/
-.main-content {
-  overflow-y: auto; // Adiciona scroll apenas na área de conteúdo
-  padding: 32px;
-
-  .dashboard-header {
-    margin-bottom: 32px;
-
-    h1 {
-      font-size: 32px;
-      font-weight: 700;
-      margin: 0;
-    }
-    
-    p {
-      color: $text-color-light;
-      margin-top: 4px;
-    }
-  }
-}
-
-/*--------------------------------------------------
-  CARDS / WIDGETS
---------------------------------------------------*/
-.dashboard-grid {
+// --- Layout Principal ---
+.dashboard-layout {
   display: grid;
-  // Grid responsivo: cria colunas de no mínimo 300px
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
 }
 
-.card {
-  background-color: $card-bg;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  padding: 24px;
-  border: 1px solid $border-color;
+// --- Card Genérico ---
+.content-card {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
 
-  .card-header {
-    font-size: 18px;
+  &__header {
+    margin-bottom: 1.5rem;
+  }
+  &__title {
+    font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 16px;
+    color: $text-primary;
+  }
+}
+
+// --- Tabela de Transações ---
+.table-wrapper {
+  overflow-x: auto;
+}
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 1rem 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    white-space: nowrap;
   }
 
-  .card-body {
-    font-size: 15px;
-    color: $text-color-light;
-    line-height: 1.6;
+  th {
+    color: $text-secondary;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
   }
+  
+  td {
+    font-size: 0.95rem;
+  }
+}
+
+.transaction-badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  &--credito {
+    background-color: rgba($color-credito, 0.1);
+    color: $color-credito;
+  }
+  &--debito {
+    background-color: rgba($color-debito, 0.1);
+    color: $color-debito;
+  }
+}
+
+
+// --- KPIs ---
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 1.5rem;
+
+  &__title {
+    color: $text-secondary;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__value {
+    font-size: 2rem;
+    font-weight: 700;
+    
+    &--positivo { color: $color-credito; }
+    &--negativo { color: $color-debito; }
+  }
+}
+
+// --- Gastos Agrupados ---
+.gastos-agrupados-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.gasto-item {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  &__descricao {
+    color: $text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+  }
+  &__valor {
+    font-weight: 600;
+  }
+  &__progresso-bg {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  &__progresso-fg {
+    height: 100%;
+    border-radius: 4px;
+  }
+}
+
+// --- Formulário de Adicionar Gasto ---
+.adicionar-gasto-container {
+    max-width: 600px;
+    margin: 2rem auto;
+}
+.adicionar-gasto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        
+        label {
+            color: $text-secondary;
+            font-weight: 500;
+        }
+
+        input {
+            background-color: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: $text-primary;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+
+            &:focus {
+                outline: none;
+                border-color: #3B82F6;
+            }
+        }
+    }
+
+    .form-submit-btn {
+        padding: 1rem;
+        border-radius: 8px;
+        border: none;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
 }

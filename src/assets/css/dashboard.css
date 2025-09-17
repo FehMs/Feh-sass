@@ -1,122 +1,220 @@
 /*!****************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs.js!./resources/scss/dashboard.scss ***!
   \****************************************************************************************************************************************************/
-@charset "UTF-8";
-/*--------------------------------------------------
-  VARIÁVEIS DE DESIGN DO DASHBOARD
---------------------------------------------------*/
-/*--------------------------------------------------
-  ESTRUTURA PRINCIPAL
---------------------------------------------------*/
 body {
-  margin: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background-color: #1f2529;
-  color: #0c1016;
+  color: #E2E8F0;
+  font-family: "Inter", sans-serif;
+}
+
+.dashboard-container {
+  padding: 1.5rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+.dashboard-header .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+.dashboard-header .header-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.dashboard-header .header-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+.dashboard-header .header-nav button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94A3B8;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.dashboard-header .header-nav button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #E2E8F0;
+}
+.dashboard-header .header-nav button.active {
+  background: rgba(255, 255, 255, 0.04);
+  color: #E2E8F0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dashboard-layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  height: 100vh;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
 }
 
-/*--------------------------------------------------
-  SIDEBAR (BARRA LATERAL)
---------------------------------------------------*/
-.sidebar {
-  background-color: #111827;
-  color: #d1d5db;
+.content-card {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.content-card__header {
+  margin-bottom: 1.5rem;
+}
+.content-card__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #E2E8F0;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.transactions-table th, .transactions-table td {
+  padding: 1rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+}
+.transactions-table th {
+  color: #94A3B8;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.transactions-table td {
+  font-size: 0.95rem;
+}
+
+.transaction-badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.transaction-badge--credito {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+}
+.transaction-badge--debito {
+  background-color: rgba(244, 63, 94, 0.1);
+  color: #F43F5E;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+.kpi-card__title {
+  color: #94A3B8;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.kpi-card__value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.kpi-card__value--positivo {
+  color: #10B981;
+}
+.kpi-card__value--negativo {
+  color: #F43F5E;
+}
+
+.gastos-agrupados-card {
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  gap: 1.5rem;
 }
-.sidebar .sidebar-logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #fff;
-  margin-bottom: 40px;
-  text-align: center;
-}
-.sidebar .sidebar-nav {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-grow: 1;
-}
-.sidebar .sidebar-nav a {
+
+.gasto-item__header {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: #d1d5db;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
-.sidebar .sidebar-nav a i {
-  width: 20px;
+.gasto-item__descricao {
+  color: #94A3B8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
 }
-.sidebar .sidebar-nav a:hover {
+.gasto-item__valor {
+  font-weight: 600;
+}
+.gasto-item__progresso-bg {
+  width: 100%;
+  height: 8px;
   background-color: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  border-radius: 4px;
+  overflow: hidden;
 }
-.sidebar .sidebar-nav a.active {
-  background-color: rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
+.gasto-item__progresso-fg {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.adicionar-gasto-container {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.adicionar-gasto-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.adicionar-gasto-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.adicionar-gasto-form .form-group label {
+  color: #94A3B8;
+  font-weight: 500;
+}
+.adicionar-gasto-form .form-group input {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #E2E8F0;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+.adicionar-gasto-form .form-group input:focus {
+  outline: none;
+  border-color: #3B82F6;
+}
+.adicionar-gasto-form .form-submit-btn {
+  padding: 1rem;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-size: 1rem;
   font-weight: 600;
-}
-.sidebar .sidebar-footer {
-  text-align: center;
-  font-size: 13px;
-  color: rgb(123.1707317073, 134.6341463415, 151.8292682927);
-}
-
-/*--------------------------------------------------
-  CONTEÚDO PRINCIPAL
---------------------------------------------------*/
-.main-content {
-  overflow-y: auto;
-  padding: 32px;
-}
-.main-content .dashboard-header {
-  margin-bottom: 32px;
-}
-.main-content .dashboard-header h1 {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 0;
-}
-.main-content .dashboard-header p {
-  color: #6b7280;
-  margin-top: 4px;
-}
-
-/*--------------------------------------------------
-  CARDS / WIDGETS
---------------------------------------------------*/
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-}
-
-.card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  padding: 24px;
-  border: 1px solid #e5e7eb;
-}
-.card .card-header {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-.card .card-body {
-  font-size: 15px;
-  color: #6b7280;
-  line-height: 1.6;
+  cursor: pointer;
+  margin-top: 1rem;
 }
