@@ -5,7 +5,7 @@ $logout-btn-hover-bg: #c63a50;
 $text-color: white;
 
 .app-header {
-  background-color: $header-bg;
+  background: linear-gradient(90deg, #1f1c2c, #928DAB);
   padding: 1rem 2rem;
   color: $text-color;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

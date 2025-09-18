@@ -12,70 +12,125 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         min-height: 500px;
         min-width: 300px;
-        .error-message{
-            color: #901212;
-            margin: 0px;
+        display: flex;
+        gap: 30px;
+        @media (max-width: 1023px){
+            min-height: unset;
+            min-width: unset;
+            width: 100%;
+            height: 100%;
+            padding: unset;
         }
-        .text-reg{
-            color: #fff;
-        }
-        .login-form{
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            .input-container{
-                label{
-                    display: flex;
-                    gap: 10px;
-                    justify-content: center;
-                    margin-top: 10px;
-                    height: 45px;
-                    svg{
-                        width: 25px;
-                        margin: auto;
+        .form__section{
+            min-width: 335px;
+            @media (max-width: 1023px){
+                padding-right: 30px;
+            }
+            .error-message{
+                color: #901212;
+                margin: 0px;
+            }
+            .text-reg{
+                color: #fff;
+            }
+            .login-form{
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                .input-container{
+                    .input-name-container{
+                        label {
+                            input{
+                                width: 50%;
+                            }
+                        }
                     }
-                    input{
-                        border: none;
-                        background: none;
-                        border-bottom: 0.2px solid #303b41;
-                        width: 100%;
-                        &:focus{
-                            box-shadow: none;
-                            outline: none;
+                    label{
+                        display: flex;
+                        gap: 10px;
+                        justify-content: center;
+                        margin-top: 10px;
+                        height: 45px;
+                        svg{
+                            width: 25px;
+                            margin: auto;
+                        }
+                        input{
+                            border: none;
+                            background: none;
+                            border-bottom: 0.2px solid #303b41;
+                            width: 100%;
+                            &:focus{
+                                box-shadow: none;
+                                outline: none;
+                            }
                         }
                     }
                 }
-            }
-            button{
-                transition: all ease 0.3s;
-                position: relative;
-                overflow: hidden;
-                z-index: 1;
-                &:hover{
-                    border: none;
-                    outline: none;
-                    background: linear-gradient(135deg, #8e2de2, #4a00e0, #00c6ff);
+                button{
+                    transition: all ease 0.3s;
+                    position: relative;
+                    overflow: hidden;
+                    z-index: 1;
+                    &:hover{
+                        border: none;
+                        outline: none;
+                        background: linear-gradient(135deg, #8e2de2, #4a00e0, #00c6ff);
+                        &::before{
+                            left: 105%;
+                        }
+                    }
                     &::before{
-                        left: 105%;
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -95%;
+                        width: 200%;
+                        height: 100%;
+                        background: rgba(255, 255, 255, 0.3);
+                        transform: skewX(-30deg);
+                        transition: all ease 0.5s;
+                        z-index: -1;
                     }
                 }
-                &::before{
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: -95%; /* Começa a pseudo-classe fora do botão */
-                    width: 200%;
-                    height: 100%;
-                    background: rgba(255, 255, 255, 0.3); /* Um brilho branco semi-transparente */
-                    transform: skewX(-30deg);
-                    transition: all ease 0.5s;
-                    z-index: -1;
+                .text-reg{
+                    font-size: 12px;
+                    text-align: left;
+                    margin-top: 10px;
                 }
             }
-            .text-reg{
+            .logo__container{
+                img{
+                    width: 100%;
+                }
+            }
+            .divider{
                 font-size: 12px;
-                text-align: left;
-                margin-top: 10px;
+                color: #7f8388 ;
+                margin-top: 20px;
+            }
+            .social-button.google{
+                background-color: #fff;
+                display: flex;
+                align-items: center;
+                color: #000;
+                gap: 5px;
+                width: 100%;
+                justify-content: center;
+                margin-top: 20px;
+            }
+        }
+        .background__image{
+            width: max-content;
+            img{
+                width: 100%;
+                max-width: 535px;
+                object-fit: cover;
+                border-radius: 16px;
+                height: 100%;
+                @media (max-width: 1023px){
+                    border-radius: unset;
+                }
             }
         }
     }
