@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, Link } from "react-router-dom";
 import BannerBackground from "../assets/img/beckground.jpg";
+import Logo from "../assets/img/LogoNewWallet.png"
 import "../assets/css/login.css";
 // Para o ícone do Google, instale com: npm install react-icons
 import { FcGoogle } from "react-icons/fc";
@@ -55,7 +56,9 @@ export default function RegisterPage() {
           <img src={BannerBackground} alt="Banner" />
         </section>
         <section className="form__section">
-          <h1>Registrar</h1>
+          <div className="logo__container">
+            <img src={Logo} alt="Logo"/>
+          </div>
           {error && <p className="error-message">{error}</p>}
           <form className="login-form" onSubmit={handleSubmit}>
             {/* ... Seus inputs de nome, email e senha continuam aqui ... */}
