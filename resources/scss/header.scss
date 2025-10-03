@@ -17,6 +17,67 @@ $text-color: white;
     justify-content: space-between;
     align-items: center;
 
+    .menu__mobile{
+      @media (min-width: 1023px){
+        display: none;
+      }
+      display: flex;
+      svg{
+        g{
+          path{
+            stroke: #fff;
+          }
+        }
+      }
+      .menu{
+        display: flex;
+        position: absolute;
+        background-color: #fff;
+        color: #000;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        width: 80%;
+        flex-direction: column;
+        left: -100%;
+        transition: all ease 0.3s;
+        opacity: 0;
+        visibility: hidden;
+        &.active{
+          left: 0%;
+          opacity: 1;
+          visibility: visible;
+        }
+        .headerMenu{
+          position: relative;
+          display: flex;
+          width: 100%;
+          height: 60px;
+          border-bottom: 1px solid #cccccc69;
+          .closeButton{
+            position: absolute;
+            top: 50%;
+            transform: translate(0%, -50%);
+            right: 20px;
+            font-size: 20px;
+            height: 35px;
+            width: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+        > ul {
+          width: 100%;
+          padding: 0px;
+          > li{
+            list-style: none;
+            padding: 15px 0px 15px 10px;
+          }
+        }
+      }
+    }
+
     .logo {
       font-size: 1.5rem;
       font-weight: bold;
@@ -46,6 +107,100 @@ $text-color: white;
           background-color: $logout-btn-hover-bg;
         }
       }
+    }
+  }
+}
+
+.app-header {
+  background: #111;
+  color: white;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .logout-button {
+      background: #3B82F6;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background: #2563EB;
+      }
+    }
+  }
+}
+
+/* --- Estilos do Menu Mobile --- */
+.menu__mobile {
+  cursor: pointer;
+  z-index: 1002; /* Garante que o ícone fique acima do overlay */
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background-color: #1a1a2e;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1001;
+  padding: 1.5rem;
+
+  // Modificador para quando o menu está ativo
+  &.active {
+    transform: translateX(0);
+  }
+
+  .headerMenu {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+  }
+
+  .closeButton {
+    font-size: 2.5rem;
+    color: white;
+    cursor: pointer;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      color: white;
+      padding: 1rem 0;
+      font-size: 1.2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
     }
   }
 }

@@ -1,0 +1,1416 @@
+[
+  {
+    "data": "02 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Sephoramorumbi",
+    "detalhes": "Parcela 3/3",
+    "valor": 246.33
+  },
+  {
+    "data": "02 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "7015 Morumbi",
+    "detalhes": "Parcela 2/2",
+    "valor": 204.5
+  },
+  {
+    "data": "03 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Via Piave",
+    "detalhes": null,
+    "valor": 30.0
+  },
+  {
+    "data": "03 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ajhonestmarket",
+    "detalhes": null,
+    "valor": 12.5
+  },
+  {
+    "data": "03 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ajhonestmarket",
+    "detalhes": null,
+    "valor": 11.55
+  },
+  {
+    "data": "03 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 38.98
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 36.22
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Via Piave",
+    "detalhes": null,
+    "valor": 30.0
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Oxxo Dumas",
+    "detalhes": null,
+    "valor": 9.1
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 63.31
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ifd*Ifood Club",
+    "detalhes": null,
+    "valor": 5.95
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Apple.Com/Bill",
+    "detalhes": null,
+    "valor": 33.4
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -29.96
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ajhonestmarket",
+    "detalhes": null,
+    "valor": 12.5
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *99 Ride",
+    "detalhes": null,
+    "valor": 5.0
+  },
+  {
+    "data": "04 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 25.98
+  },
+  {
+    "data": "05 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 17.76
+  },
+  {
+    "data": "05 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "99app *99app",
+    "detalhes": null,
+    "valor": 7.8
+  },
+  {
+    "data": "05 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 21.38
+  },
+  {
+    "data": "06 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn *Tiktok Shop",
+    "detalhes": null,
+    "valor": 45.47
+  },
+  {
+    "data": "06 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn *Tiktok Shop",
+    "detalhes": null,
+    "valor": 37.0
+  },
+  {
+    "data": "06 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Brunovinicius",
+    "detalhes": null,
+    "valor": 50.0
+  },
+  {
+    "data": "06 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 77.94
+  },
+  {
+    "data": "06 SET",
+    "final_cartao": null,
+    "estabelecimento": "IOF de \"Nitrado Usa\"",
+    "detalhes": null,
+    "valor": 3.01
+  },
+  {
+    "data": "06 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Nitrado Usa",
+    "detalhes": "BRL 83.27 = USD 15.34; Conversão: BRL 5.61 = USD 1",
+    "valor": 86.1
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 76.91
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -19.95
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Netflix.Com",
+    "detalhes": null,
+    "valor": 44.9
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 19.95
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -19.98
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ifd*39.606.146 Danilo",
+    "detalhes": null,
+    "valor": 30.09
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 90.94
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 19.98
+  },
+  {
+    "data": "07 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 45.91
+  },
+  {
+    "data": "08 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dl*99 Ride",
+    "detalhes": null,
+    "valor": 11.9
+  },
+  {
+    "data": "08 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Vitrine",
+    "detalhes": null,
+    "valor": 145.86
+  },
+  {
+    "data": "09 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ifd*Arcos Dourados Com",
+    "detalhes": null,
+    "valor": 40.91
+  },
+  {
+    "data": "09 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 30.33
+  },
+  {
+    "data": "10 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 37.58
+  },
+  {
+    "data": "10 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 37.78
+  },
+  {
+    "data": "10 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Oxxo Dumas",
+    "detalhes": null,
+    "valor": 7.56
+  },
+  {
+    "data": "10 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -37.58
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *99 Ride",
+    "detalhes": null,
+    "valor": 3.0
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dl*99 Ride",
+    "detalhes": null,
+    "valor": 39.79
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 12.98
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -10.95
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Raiadrogasilsa",
+    "detalhes": null,
+    "valor": 99.79
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 28.9
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 35.96
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 10.95
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ifd*Adiser Comercio de",
+    "detalhes": null,
+    "valor": 56.87
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Apple.Com/Bill",
+    "detalhes": null,
+    "valor": 33.4
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 35.95
+  },
+  {
+    "data": "11 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -8.15
+  },
+  {
+    "data": "12 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dl*99 Ride",
+    "detalhes": null,
+    "valor": 9.4
+  },
+  {
+    "data": "12 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 12.93
+  },
+  {
+    "data": "12 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 23.6
+  },
+  {
+    "data": "12 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *99 Ride",
+    "detalhes": null,
+    "valor": 9.2
+  },
+  {
+    "data": "12 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Jeronimospmarket",
+    "detalhes": null,
+    "valor": 74.0
+  },
+  {
+    "data": "12 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -23.6
+  },
+  {
+    "data": "12 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 14.93
+  },
+  {
+    "data": "12 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *99 Ride",
+    "detalhes": null,
+    "valor": 10.9
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -11.94
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 52.9
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn*Tiktok Sh",
+    "detalhes": null,
+    "valor": 30.66
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn *Tiktok Shop",
+    "detalhes": null,
+    "valor": 78.4
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "99app *99app",
+    "detalhes": null,
+    "valor": 19.26
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn*Tiktok Sh",
+    "detalhes": null,
+    "valor": 24.9
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn *Tiktok Shop",
+    "detalhes": null,
+    "valor": 27.5
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 22.95
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 47.91
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 11.94
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 40.91
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -24.98
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 24.98
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn *Tiktok Shop",
+    "detalhes": null,
+    "valor": 22.07
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 11.98
+  },
+  {
+    "data": "13 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 27.94
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Mp *Raquelbar",
+    "detalhes": null,
+    "valor": 5.0
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Cpagestaode",
+    "detalhes": null,
+    "valor": 140.0
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dl *Google Google One",
+    "detalhes": null,
+    "valor": 9.99
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "The Drinks Burguer",
+    "detalhes": null,
+    "valor": 6.0
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Janela Bar",
+    "detalhes": null,
+    "valor": 25.0
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Supra Bar Vila Madalen",
+    "detalhes": null,
+    "valor": 28.0
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Bacio Di Latte-Lj0054",
+    "detalhes": null,
+    "valor": 41.9
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Seujohbeer",
+    "detalhes": null,
+    "valor": 15.0
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *99 Ride",
+    "detalhes": null,
+    "valor": 16.34
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Oxxo Arthur Azevedo",
+    "detalhes": null,
+    "valor": 11.62
+  },
+  {
+    "data": "14 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Oxxo Fradique",
+    "detalhes": null,
+    "valor": 9.29
+  },
+  {
+    "data": "15 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Mp *Raquelbar",
+    "detalhes": null,
+    "valor": 30.0
+  },
+  {
+    "data": "15 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 27.96
+  },
+  {
+    "data": "15 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 34.96
+  },
+  {
+    "data": "15 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -34.96
+  },
+  {
+    "data": "16 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Milk Moo Sp Market",
+    "detalhes": null,
+    "valor": 62.0
+  },
+  {
+    "data": "16 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dl*99 Ride",
+    "detalhes": null,
+    "valor": 38.19
+  },
+  {
+    "data": "16 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de \"Ebn *Tiktok Shop\"",
+    "detalhes": "Estorno referente a compra em Ebn *Tiktok Shop, de valor R$ 45,47, realizada em 05 de Setembro de 2025",
+    "valor": -45.47
+  },
+  {
+    "data": "16 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "99app *99app",
+    "detalhes": null,
+    "valor": 25.7
+  },
+  {
+    "data": "16 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ppro *Microsoft",
+    "detalhes": null,
+    "valor": 35.99
+  },
+  {
+    "data": "16 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Amazonprimebr",
+    "detalhes": null,
+    "valor": 19.9
+  },
+  {
+    "data": "17 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Vtn Academias de Gina",
+    "detalhes": null,
+    "valor": 109.0
+  },
+  {
+    "data": "17 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn *Tiktok Shop",
+    "detalhes": null,
+    "valor": 64.9
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 39.97
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 11.95
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "99food *Zamp S.A.",
+    "detalhes": null,
+    "valor": 18.45
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -30.98
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Apple.Com/Bill",
+    "detalhes": null,
+    "valor": 33.4
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn *Canva04643",
+    "detalhes": null,
+    "valor": 4.9
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "99app *99app",
+    "detalhes": null,
+    "valor": 22.2
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 30.98
+  },
+  {
+    "data": "18 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Recargapay *Bilhunico",
+    "detalhes": null,
+    "valor": 50.0
+  },
+  {
+    "data": "19 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn*Tiktok Sh",
+    "detalhes": null,
+    "valor": 33.18
+  },
+  {
+    "data": "19 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 15.94
+  },
+  {
+    "data": "19 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 14.99
+  },
+  {
+    "data": "19 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dl*99 Ride",
+    "detalhes": null,
+    "valor": 32.91
+  },
+  {
+    "data": "19 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Oxxo Dumas",
+    "detalhes": null,
+    "valor": 24.0
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -0.01
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 41.97
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 37.92
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Janela Bar",
+    "detalhes": null,
+    "valor": 25.0
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -45.67
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -32.75
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 44.93
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -37.14
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 46.97
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 24.94
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -45.71
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Wolfpackbrewpub",
+    "detalhes": null,
+    "valor": 38.0
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 50.96
+  },
+  {
+    "data": "20 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 50.92
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Mp *Raquelbar",
+    "detalhes": null,
+    "valor": 4.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Zig*Beco do Espeto",
+    "detalhes": null,
+    "valor": 5.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 16.94
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 53.95
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "The Drinks Burguer",
+    "detalhes": null,
+    "valor": 25.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Beco do Espeto Lanchon",
+    "detalhes": null,
+    "valor": 20.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 14.95
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dm *Crunchyroll Llc",
+    "detalhes": null,
+    "valor": 14.99
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 25.93
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Apple.Com/Bill",
+    "detalhes": null,
+    "valor": 14.99
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Espaco Terrazzo",
+    "detalhes": null,
+    "valor": 17.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Beco do Espeto Lanchon",
+    "detalhes": null,
+    "valor": 20.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -53.95
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Zig*Belisco",
+    "detalhes": null,
+    "valor": 45.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "The Drinks Burguer",
+    "detalhes": null,
+    "valor": 20.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 65.95
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 15.91
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Seujohbeer",
+    "detalhes": null,
+    "valor": 15.0
+  },
+  {
+    "data": "21 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 16.91
+  },
+  {
+    "data": "22 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Zig*Beco do Espeto",
+    "detalhes": null,
+    "valor": 32.0
+  },
+  {
+    "data": "22 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Seujohbeer",
+    "detalhes": null,
+    "valor": 15.0
+  },
+  {
+    "data": "22 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Zig*Beco do Espeto",
+    "detalhes": null,
+    "valor": 16.0
+  },
+  {
+    "data": "22 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Zig*Beco do Espeto",
+    "detalhes": null,
+    "valor": 22.0
+  },
+  {
+    "data": "22 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "The Drinks Burguer",
+    "detalhes": null,
+    "valor": 15.0
+  },
+  {
+    "data": "22 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Praca Panamericana",
+    "detalhes": null,
+    "valor": 74.5
+  },
+  {
+    "data": "22 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Jota",
+    "detalhes": null,
+    "valor": 109.8
+  },
+  {
+    "data": "22 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Cafebrasil",
+    "detalhes": null,
+    "valor": 5.0
+  },
+  {
+    "data": "23 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 28.95
+  },
+  {
+    "data": "24 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Shopping Center Morumb",
+    "detalhes": null,
+    "valor": 48.6
+  },
+  {
+    "data": "24 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 39.97
+  },
+  {
+    "data": "24 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Recargapay *Bilhunico",
+    "detalhes": null,
+    "valor": 50.0
+  },
+  {
+    "data": "24 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Oxxo Dumas",
+    "detalhes": null,
+    "valor": 4.49
+  },
+  {
+    "data": "24 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ebn*Spotify",
+    "detalhes": null,
+    "valor": 23.9
+  },
+  {
+    "data": "24 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "99food *28.615.298 Ing",
+    "detalhes": null,
+    "valor": 21.0
+  },
+  {
+    "data": "24 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 1.44
+  },
+  {
+    "data": "24 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 33.48
+  },
+  {
+    "data": "25 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Bestcandyz",
+    "detalhes": null,
+    "valor": 47.6
+  },
+  {
+    "data": "25 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Apple.Com/Bill",
+    "detalhes": null,
+    "valor": 33.4
+  },
+  {
+    "data": "25 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 15.91
+  },
+  {
+    "data": "25 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ajhonestmarket",
+    "detalhes": null,
+    "valor": 3.99
+  },
+  {
+    "data": "26 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "99food *Arcos Dourados",
+    "detalhes": null,
+    "valor": 39.83
+  },
+  {
+    "data": "26 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Ajhonestmarket",
+    "detalhes": null,
+    "valor": 4.09
+  },
+  {
+    "data": "26 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 20.93
+  },
+  {
+    "data": "26 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Oxxo Dumas",
+    "detalhes": null,
+    "valor": 8.99
+  },
+  {
+    "data": "26 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 25.93
+  },
+  {
+    "data": "26 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *99 Ride",
+    "detalhes": null,
+    "valor": 23.8
+  },
+  {
+    "data": "26 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *Gamers Club",
+    "detalhes": null,
+    "valor": 21.9
+  },
+  {
+    "data": "26 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 17.96
+  },
+  {
+    "data": "27 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 21.97
+  },
+  {
+    "data": "27 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Vfy Com Loc Serv",
+    "detalhes": null,
+    "valor": 5.99
+  },
+  {
+    "data": "27 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -21.97
+  },
+  {
+    "data": "27 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Bragas Pizza Grill",
+    "detalhes": null,
+    "valor": 141.98
+  },
+  {
+    "data": "27 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "99food *Arcos Dourados",
+    "detalhes": null,
+    "valor": 35.63
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *99 Ride",
+    "detalhes": null,
+    "valor": 22.65
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 26.97
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 41.61
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *99 Ride",
+    "detalhes": null,
+    "valor": 17.0
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 56.95
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Temaki Fry Marajoara",
+    "detalhes": null,
+    "valor": 83.55
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -26.97
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 41.27
+  },
+  {
+    "data": "28 SET",
+    "final_cartao": null,
+    "estabelecimento": "Estorno de Uber - NuPay",
+    "detalhes": null,
+    "valor": -41.61
+  },
+  {
+    "data": "29 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dl*99 Ride",
+    "detalhes": null,
+    "valor": 13.0
+  },
+  {
+    "data": "29 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Milkymoo Ibirapuera",
+    "detalhes": null,
+    "valor": 29.0
+  },
+  {
+    "data": "29 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Dl*99 Ride",
+    "detalhes": null,
+    "valor": 21.6
+  },
+  {
+    "data": "29 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Jaqueline de Sales San",
+    "detalhes": null,
+    "valor": 5.0
+  },
+  {
+    "data": "29 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *Tembici",
+    "detalhes": null,
+    "valor": 21.75
+  },
+  {
+    "data": "29 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Pg *Tembici",
+    "detalhes": null,
+    "valor": 32.9
+  },
+  {
+    "data": "29 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "Takeda",
+    "detalhes": null,
+    "valor": 80.0
+  },
+  {
+    "data": "30 SET",
+    "final_cartao": "8125",
+    "estabelecimento": "App *Coleemmim",
+    "detalhes": null,
+    "valor": 24.8
+  },
+  {
+    "data": "01 OUT",
+    "final_cartao": null,
+    "estabelecimento": "Uber - NuPay",
+    "detalhes": null,
+    "valor": 40.97
+  },
+  {
+    "data": "01 OUT",
+    "final_cartao": "8125",
+    "estabelecimento": "26821673igorklein",
+    "detalhes": null,
+    "valor": 3.0
+  },
+  {
+    "data": "01 OUT",
+    "final_cartao": "8125",
+    "estabelecimento": "Bestcandyz",
+    "detalhes": null,
+    "valor": 38.2
+  }
+]

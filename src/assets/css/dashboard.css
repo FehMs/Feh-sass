@@ -1,6 +1,7 @@
 /*!****************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs.js!./resources/scss/dashboard.scss ***!
   \****************************************************************************************************************************************************/
+@charset "UTF-8";
 body {
   background-color: #1f2529;
   color: #E2E8F0;
@@ -29,6 +30,11 @@ body {
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+}
+@media (max-width: 768px) {
+  .dashboard-header .header-title {
+    font-size: 1rem;
+  }
 }
 .dashboard-header .header-nav {
   display: flex;
@@ -59,12 +65,24 @@ body {
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
 }
+@media (max-width: 768px) {
+  .dashboard-layout {
+    display: unset;
+  }
+}
 
 .content-card {
   border: 1px solid transparent;
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+  .content-card {
+    height: 225px;
+    overflow: auto;
+    padding: 10px 1.5rem;
+  }
 }
 .content-card__header {
   margin-bottom: 1.5rem;
@@ -87,7 +105,6 @@ body {
   padding: 1rem 0.5rem;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  white-space: nowrap;
 }
 .transactions-table th {
   color: #94A3B8;
@@ -217,4 +234,105 @@ body {
   font-weight: 600;
   cursor: pointer;
   margin-top: 1rem;
+}
+
+/* Estilos do Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: #1a1a2e; /* Cor de fundo escura, ajuste conforme seu tema */
+  padding: 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  background: linear-gradient(120deg, #3B82F6 0%, #9333EA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-summary {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.modal-transactions-list {
+  list-style: none;
+  padding: 0;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.modal-transactions-list li {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 16px;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-transactions-list li:last-child {
+  border-bottom: none;
+}
+
+.modal-transactions-list li > span:nth-child(2) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Indicador de item clicável nos gastos */
+.gasto-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.gasto-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.gasto-item__count {
+  color: #9ca3af; /* Cinza claro */
+  font-size: 0.8em;
+  font-weight: normal;
 }
