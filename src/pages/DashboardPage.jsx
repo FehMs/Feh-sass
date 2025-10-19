@@ -64,7 +64,7 @@ export default function DashboardPage() {
 
     return () => unsubscribe();
 
-  }, [currentUser]);
+  }, [currentUser?.uid]);
 
 
   const handleAdicionarTransacao = async (novaTransacao) => {
@@ -344,9 +344,17 @@ function PaginaAdicionarGasto({ onAdicionarTransacao }) {
   );
 }
 
+// No final do seu arquivo, na função Card:
+
 function Card({ title, children }) {
   return (
-    <motion.section initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="content-card" style={{ background: CARD_BG}}>
+    <motion.section 
+      initial={{ opacity: 0, y: 8 }} 
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }} 
+      className="content-card" 
+      style={{ background: CARD_BG }}
+    >
       <div className="content-card__header">
         <h3 className="content-card__title">{title}</h3>
       </div>

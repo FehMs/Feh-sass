@@ -77,6 +77,12 @@
   font-size: 1.5rem;
   font-weight: bold;
 }
+.app-header .header-container .logo a {
+  color: #fff;
+}
+.app-header .header-container .logo a:hover {
+  color: #fff;
+}
 .app-header .header-container .user-info {
   display: flex;
   align-items: center;
