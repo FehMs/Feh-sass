@@ -32,19 +32,35 @@ export default function MetasGastos() {
 
   // Carregar meta do usuário
   useEffect(() => {
-    if (!currentUser) return;
-    
-    const carregarMeta = async () => {
-      const metaDoc = await getDoc(doc(db, "metas", currentUser.uid));
-      if (metaDoc.exists()) {
-        setMetaDiaria(metaDoc.data().metaDiaria || 100);
-      }
-    };
-    
-    carregarMeta();
-  }, [currentUser]);
+    if (!currentUser) {
+      setTransacoes([]);
+      return;
+    }
 
-  // Carregar transações do mês
+    const inicio = format(startOfMonth(mesAtual), 'yyyy-MM-dd');
+    const fim = format(endOfMonth(mesAtual), 'yyyy-MM-dd');
+
+    // Cria a query para o Firebase
+    const q = query(
+      collection(db, "transacoes"),
+      where("userId", "==", currentUser.uid),
+      where("tipo", "==", "debito"),
+      where("data", ">=", inicio),
+      where("data", "<=", fim)
+    );
+
+    // O onSnapshot escuta as mudanças
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const trans = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setTransacoes(trans);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser, mesAtual]);
+
   useEffect(() => {
     if (!currentUser) {
       setTransacoes([]);
@@ -85,13 +101,12 @@ export default function MetasGastos() {
     return mapa;
   }, [transacoes]);
 
-  // Calcular quantidade de transações por dia
   const quantidadePorDia = useMemo(() => {
     const mapa = new Map();
     
     transacoes.forEach(t => {
       const quantidadeAtual = mapa.get(t.data) || 0;
-      mapa.set(t.data, quantidadeAtual + 1);
+      mapa.set(t.data, quantidadeAtual + 1); 
     });
 
     return mapa;
@@ -398,15 +413,9 @@ function CalendarioMetas({ mesAtual, gastosPorDia, quantidadePorDia, metaDiaria,
 
   return (
     <div className="calendario-grid">
-      {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(dia => (
-        <div key={dia} className="calendario-weekday">
-          {dia}
-        </div>
-      ))}
+      {/* ... (renderização dos weekdays) ... */}
 
-      {Array.from({ length: primeiroDia }).map((_, i) => (
-        <div key={`empty-${i}`} />
-      ))}
+      {/* ... (renderização dos dias vazios) ... */}
 
       {dias.map(dia => {
         const dataStr = format(dia, 'yyyy-MM-dd');
@@ -417,11 +426,18 @@ function CalendarioMetas({ mesAtual, gastosPorDia, quantidadePorDia, metaDiaria,
         const ehHoje = isSameDay(dia, hoje);
         const ehFuturo = dia > hoje;
 
+        // 1. CRIE ESTA NOVA VARIÁVEL
+        const ehPassado = !ehFuturo && !ehHoje; 
+
         let className = 'calendario-day';
         if (ehFuturo) className += ' calendario-day--futuro';
         if (ehHoje) className += ' calendario-day--hoje';
+        
+        // Adiciona a classe 'ok' para dias passados sem gastos
         if (temGasto) {
           className += excedeu ? ' calendario-day--excedeu' : ' calendario-day--ok';
+        } else if (ehPassado) { // <-- ADICIONE ESTE ELSE IF
+          className += ' calendario-day--ok';
         }
 
         return (
@@ -436,6 +452,8 @@ function CalendarioMetas({ mesAtual, gastosPorDia, quantidadePorDia, metaDiaria,
             <div className="calendario-day-number">
               {format(dia, 'd')}
             </div>
+
+            {/* Este bloco continua igual, só mostra se tem gasto */}
             {temGasto && (
               <>
                 <div className={`calendario-day-value ${excedeu ? 'calendario-day-value--danger' : 'calendario-day-value--success'}`}>
@@ -446,7 +464,9 @@ function CalendarioMetas({ mesAtual, gastosPorDia, quantidadePorDia, metaDiaria,
                 </div>
               </>
             )}
-            {temGasto && (
+            
+            {/* 2. MUDE A CONDIÇÃO AQUI */}
+            {(temGasto || ehPassado) && (
               <div className="calendario-day-indicator">
                 <div className={`calendario-day-dot ${excedeu ? 'calendario-day-dot--danger' : 'calendario-day-dot--success'}`} />
               </div>

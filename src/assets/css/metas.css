@@ -161,14 +161,21 @@
   cursor: not-allowed;
 }
 .calendario-day--hoje {
-  box-shadow: 0 0 0 2px #3B82F6;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4392156863);
 }
 .calendario-day--excedeu {
   background: rgba(239, 68, 68, 0.2);
   border-color: rgba(239, 68, 68, 0.4);
 }
+@media (max-width: 768px) {
+  .calendario-day--excedeu .calendario-day-value--danger {
+    display: none;
+  }
+  .calendario-day--excedeu .calendario-day-count {
+    display: none;
+  }
+}
 .calendario-day--ok {
-  background: rgba(16, 185, 129, 0.2);
   border-color: rgba(16, 185, 129, 0.4);
 }
 .calendario-day-number {
