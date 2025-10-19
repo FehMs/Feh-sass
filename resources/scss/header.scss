@@ -19,7 +19,7 @@ $text-color: white;
 
     .menu__mobile{
       @media (min-width: 1023px){
-        display: none;
+        display: none !important;
       }
       display: flex;
       svg{

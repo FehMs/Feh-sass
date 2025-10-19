@@ -17,7 +17,7 @@
 }
 @media (min-width: 1023px) {
   .app-header .header-container .menu__mobile {
-    display: none;
+    display: none !important;
   }
 }
 .app-header .header-container .menu__mobile {

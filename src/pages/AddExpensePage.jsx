@@ -1,27 +1,77 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useTransactions } from '../contexts/TransactionsContext'; 
+
+import { db } from "../firebase/config"; 
+import { useAuth } from "../contexts/AuthContext";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const CARD_BORDER = "linear-gradient(120deg, #3B82F6 0%, #9333EA 100%)";
+
+function Card({ title, children }) {
+    return (
+        <motion.section 
+            initial={{ opacity: 0, y: 8 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.5 }} 
+            className="content-card" 
+            style={{ background: 'rgba(255,255,255,0.04)' }}
+        >
+            <div className="content-card__header">
+                <h3 className="content-card__title">{title}</h3>
+            </div>
+            {children}
+        </motion.section>
+    );
+}
 
 
 export default function AddExpensePage() {
     const [descricao, setDescricao] = useState('');
     const [valor, setValor] = useState('');
-    const { addTransaction } = useTransactions();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { currentUser } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Validação (continua a mesma)
         if (!descricao.trim() || !valor || isNaN(parseFloat(valor)) || parseFloat(valor) <= 0) {
             alert("Por favor, preencha a descrição e um valor válido.");
             return;
         }
 
-        addTransaction({ descricao: descricao.trim(), valor: parseFloat(valor) });
+        if (!currentUser) {
+            alert("Erro: usuário não autenticado.");
+            return;
+        }
 
-        navigate('/');
+        setIsLoading(true);
+
+        const hoje = new Date();
+        hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
+        const dataFormatada = hoje.toISOString().split('T')[0];
+
+        try {
+            await addDoc(collection(db, "transacoes"), {
+                descricao: descricao.trim(),
+                valor: parseFloat(valor),
+                data: dataFormatada,
+                tipo: 'debito',
+                userId: currentUser.uid,
+                criadoEm: serverTimestamp()
+            });
+
+            navigate('/');
+
+        } catch (error) {
+            console.error("Erro ao adicionar gasto: ", error);
+            alert("Não foi possível adicionar o gasto. Tente novamente.");
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -40,7 +90,9 @@ export default function AddExpensePage() {
                         <label htmlFor="valor">Valor (R$)</label>
                         <input id="valor" type="number" value={valor} onChange={e => setValor(e.target.value)} placeholder="Ex: 25.50" step="0.01" min="0.01" required />
                     </div>
-                    <button type="submit" className="form-submit-btn" style={{ background: CARD_BORDER }}>Adicionar Gasto</button>
+                    <button type="submit" className="form-submit-btn" style={{ background: CARD_BORDER }} disabled={isLoading}>
+                        {isLoading ? 'Adicionando...' : 'Adicionar Gasto'}
+                    </button>
                 </form>
             </Card>
         </motion.div>

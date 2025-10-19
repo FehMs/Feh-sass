@@ -1,19 +1,25 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 import Header from '../components/header';
 import "../assets/css/dashboard.css";
-import transacoesJson from '../data/info.json';
+
+import { db } from "../firebase/config";
+import { collection, query, where, onSnapshot, addDoc, serverTimestamp, orderBy } from "firebase/firestore";
+import { useAuth } from "../contexts/AuthContext";
+
 
 const CARD_BG = "rgba(255,255,255,0.04)";
 const CARD_BORDER = "linear-gradient(120deg, #3B82F6 0%, #9333EA 100%)";
 const COLORS = ["#7C3AED", "#2563EB", "#9333EA", "#3B82F6", "#A78BFA", "#60A5FA"];
 
 function numberToBRL(n) {
+  if (typeof n !== 'number') return 'R$ 0,00';
   return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
-
 function normalizarDescricao(descricao) {
+  if (typeof descricao !== 'string') return 'Outros';
   const descLower = descricao.toLowerCase();
   if (descLower.includes('ifd*') || descLower.includes('ifood')) return 'iFood';
   if (descLower.includes('uber')) return 'Uber';
@@ -22,50 +28,71 @@ function normalizarDescricao(descricao) {
   return descricao.split(' *')[0].trim();
 }
 
-
 export default function DashboardPage() {
   const [pagina, setPagina] = useState('dashboard');
   const [transacoes, setTransacoes] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+
+  const { currentUser } = useAuth();
 
   useEffect(() => {
-    const anoAtual = new Date().getFullYear();
-    const mesesMap = {
-      'JAN': '01', 'FEV': '02', 'MAR': '03', 'ABR': '04', 'MAI': '05', 'JUN': '06',
-      'JUL': '07', 'AGO': '08', 'SET': '09', 'OUT': '10', 'NOV': '11', 'DEZ': '12'
-    };
-    
-    const transacoesFormatadas = transacoesJson.map(item => {
-      const [dia, mesAbrev] = item.data.split(' ');
-      const mesNum = mesesMap[mesAbrev.toUpperCase()];
-      const dataFormatada = `${anoAtual}-${mesNum}-${dia.padStart(2, '0')}`;
-      
-      return {
-        id: Math.random(),
-        data: dataFormatada,
-        descricao: `${item.estabelecimento} ${item.detalhes ? `(${item.detalhes})` : ''}`.trim(),
-        valor: item.valor,
-        tipo: 'debito',
-        forma_pagamento: `Cartão ${item.final_cartao}`
-      };
-    });
-    setTransacoes(transacoesFormatadas);
-  }, []);
+    if (!currentUser) {
+      setTransacoes([]);
+      setCarregando(false);
+      return;
+    }
 
-  const handleAdicionarTransacao = (novaTransacao) => {
+    setCarregando(true);
+    const transacoesCollectionRef = collection(db, "transacoes");
+
+    const q = query(
+      transacoesCollectionRef,
+      where("userId", "==", currentUser.uid),
+      orderBy("criadoEm", "desc")
+    );
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const transacoesFormatadas = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+  
+        data: doc.data().data
+      }));
+      setTransacoes(transacoesFormatadas);
+      setCarregando(false);
+    });
+
+    return () => unsubscribe();
+
+  }, [currentUser]);
+
+
+  const handleAdicionarTransacao = async (novaTransacao) => {
+    if (!currentUser) {
+      alert("Você precisa estar logado para adicionar uma transação.");
+      return;
+    }
+    
     const hoje = new Date();
     hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
     const dataFormatada = hoje.toISOString().split('T')[0];
 
-    const transacaoCompleta = {
-      id: Math.random(),
-      ...novaTransacao,
-      data: dataFormatada,
-      tipo: 'debito',
-      forma_pagamento: 'Cartão 8125',
-    };
-    setTransacoes(prevTransacoes => [transacaoCompleta, ...prevTransacoes]);
-    setPagina('dashboard');
+    try {
+      await addDoc(collection(db, "transacoes"), {
+        ...novaTransacao,
+        data: dataFormatada,
+        tipo: 'debito',
+        forma_pagamento: 'Cartão 8125',
+        userId: currentUser.uid,
+        criadoEm: serverTimestamp()
+      });
+      setPagina('dashboard');
+    } catch (error) {
+      console.error("Erro ao adicionar transação: ", error);
+      alert("Ocorreu um erro ao salvar o gasto.");
+    }
   };
+
 
   return (
     <>
@@ -73,7 +100,7 @@ export default function DashboardPage() {
       <div className="dashboard-container">
         <main className="main-content">
           <SubHeader pagina={pagina} setPagina={setPagina} />
-          {transacoes.length === 0 ? (
+          {carregando ? ( // Mostra mensagem de carregamento
             <p>Carregando transações...</p>
           ) : (
             <>
@@ -93,7 +120,7 @@ function SubHeader({ pagina, setPagina }) {
       <div className="header-content">
         <motion.h1
           initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-          className="header-title" style={{ backgroundImage: CARD_BORDER }}
+          className="header-title"
         >
           Painel Financeiro
         </motion.h1>
@@ -269,13 +296,12 @@ function ModalDetalhesGasto({ data, onClose }) {
 
 function KPI({ title, value, highlight }) {
   return (
-    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="kpi-card" style={{ background: CARD_BG, borderImage: `${CARD_BORDER} 1`}}>
+    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="kpi-card" style={{ background: CARD_BG}}>
       <div className="kpi-card__title">{title}</div>
       <div className={`kpi-card__value ${highlight ? 'kpi-card__value--' + highlight : ''}`}>{value}</div>
     </motion.div>
   );
 }
-
 
 function PaginaAdicionarGasto({ onAdicionarTransacao }) {
   const [descricao, setDescricao] = useState('');
@@ -320,7 +346,7 @@ function PaginaAdicionarGasto({ onAdicionarTransacao }) {
 
 function Card({ title, children }) {
   return (
-    <motion.section initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="content-card" style={{ background: CARD_BG, borderImage: `${CARD_BORDER} 1`}}>
+    <motion.section initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="content-card" style={{ background: CARD_BG}}>
       <div className="content-card__header">
         <h3 className="content-card__title">{title}</h3>
       </div>
