@@ -51,7 +51,6 @@ export default function MetasGastos() {
       return;
     }
 
-    // ADICIONADO: Zera as transações imediatamente ao trocar o mês
     setTransacoes([]); 
 
     const inicio = format(startOfMonth(mesAtual), 'yyyy-MM-dd');
