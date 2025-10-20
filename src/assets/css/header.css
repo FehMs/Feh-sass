@@ -88,22 +88,14 @@
   align-items: center;
   gap: 1rem;
 }
+@media (max-width: 768px) {
+  .app-header .header-container .user-info .navbar {
+    display: none;
+  }
+}
 .app-header .header-container .user-info .user-email {
   font-size: 0.9rem;
   opacity: 0.8;
-}
-.app-header .header-container .user-info .logout-button {
-  background-color: #e94560;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-}
-.app-header .header-container .user-info .logout-button:hover {
-  background-color: #c63a50;
 }
 
 .app-header {
@@ -164,6 +156,28 @@
   z-index: 1001;
   padding: 1.5rem;
 }
+.menu ul li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.menu ul li a {
+  color: #fff;
+}
+.menu ul .logout-button {
+  background-color: #e94560;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  margin-top: 20px;
+}
+.menu ul .logout-button:hover {
+  background-color: #c63a50;
+}
 .menu.active {
   transform: translateX(0);
 }
@@ -173,9 +187,8 @@
   margin-bottom: 2rem;
 }
 .menu .closeButton {
-  font-size: 2.5rem;
-  color: white;
-  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
 }
 .menu ul {
   list-style: none;

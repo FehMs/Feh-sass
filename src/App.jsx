@@ -10,7 +10,6 @@ import Header from './components/header';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
-import AddExpensePage from './pages/AddExpensePage';
 import MetasGastos from './pages/MetasGastos';
 
 export default function App() {
@@ -53,18 +52,6 @@ export default function App() {
               </ProtectedRoute>
             } 
           />
-
-          <Route 
-            path="/adicionar"
-            element={
-              <ProtectedRoute>
-                <TransactionsProvider>
-                  <AddExpensePage />
-                </TransactionsProvider>
-              </ProtectedRoute>
-            } 
-          />
-
         </Routes>
       </Router>
     </AuthProvider>

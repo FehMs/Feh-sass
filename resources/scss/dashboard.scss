@@ -669,3 +669,31 @@ body {
     }
   }
 }
+
+.btn-remover,
+.btn-remover-modal {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: none;
+  border-radius: 8px;
+  width: 24px;
+  height: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.btn-remover:hover,
+.btn-remover-modal:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+.modal-transactions-list li .btn-remover-modal {
+  margin-left: auto;
+}

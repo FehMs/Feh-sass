@@ -10,7 +10,7 @@ import "../assets/css/metas.css";
 const CARD_BG = "rgba(255,255,255,0.04)";
 const COLORS = {
   success: "#10B981",
-  warning: "#F59E0B", 
+  warning: "#F59E0B",
   danger: "#EF4444",
   primary: "#3B82F6"
 };
@@ -30,378 +30,156 @@ export default function MetasGastos() {
   const [novaMetaInput, setNovaMetaInput] = useState("");
   const { currentUser } = useAuth();
 
-  // Carregar meta do usuário
+  // --- useEffect para carregar meta (sem alterações) ---
+  useEffect(() => {
+    if (!currentUser) return;
+    const carregarMeta = async () => {
+      const metaDocRef = doc(db, "metas", currentUser.uid);
+      const metaDoc = await getDoc(metaDocRef);
+      if (metaDoc.exists()) {
+        setMetaDiaria(metaDoc.data().metaDiaria || 100);
+      } else {
+        await setDoc(metaDocRef, { metaDiaria: 100, userId: currentUser.uid });
+        setMetaDiaria(100);
+      }
+    };
+    carregarMeta();
+  }, [currentUser]);
+
+  // --- useEffect para carregar transações (CORRIGIDO - sem filtro de tipo) ---
   useEffect(() => {
     if (!currentUser) {
       setTransacoes([]);
       return;
     }
-
     const inicio = format(startOfMonth(mesAtual), 'yyyy-MM-dd');
     const fim = format(endOfMonth(mesAtual), 'yyyy-MM-dd');
-
-    // Cria a query para o Firebase
     const q = query(
       collection(db, "transacoes"),
       where("userId", "==", currentUser.uid),
-      where("tipo", "==", "debito"),
+      // where("tipo", "==", "debito"), // REMOVIDO
       where("data", ">=", inicio),
       where("data", "<=", fim)
     );
-
-    // O onSnapshot escuta as mudanças
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const trans = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const trans = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setTransacoes(trans);
     });
-
     return () => unsubscribe();
   }, [currentUser, mesAtual]);
 
-  useEffect(() => {
-    if (!currentUser) {
-      setTransacoes([]);
-      return;
-    }
-
-    const inicio = format(startOfMonth(mesAtual), 'yyyy-MM-dd');
-    const fim = format(endOfMonth(mesAtual), 'yyyy-MM-dd');
-
-    const q = query(
-      collection(db, "transacoes"),
-      where("userId", "==", currentUser.uid),
-      where("tipo", "==", "debito"),
-      where("data", ">=", inicio),
-      where("data", "<=", fim)
-    );
-
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const trans = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setTransacoes(trans);
-    });
-
-    return () => unsubscribe();
-  }, [currentUser, mesAtual]);
-
-  // Calcular gastos por dia
+  // --- Calcular GASTO LÍQUIDO por dia (CORRIGIDO) ---
   const gastosPorDia = useMemo(() => {
     const mapa = new Map();
-    
     transacoes.forEach(t => {
-      const gastoAtual = mapa.get(t.data) || 0;
-      mapa.set(t.data, gastoAtual + (t.valor || 0));
+      const valorAtual = mapa.get(t.data) || 0;
+      let novoValor = valorAtual;
+      if (t.tipo === 'credito') {
+        novoValor -= (t.valor || 0);
+      } else { // débito ou outros
+        novoValor += (t.valor || 0);
+      }
+      mapa.set(t.data, novoValor);
     });
-
     return mapa;
   }, [transacoes]);
 
+  // quantidadePorDia (sem alterações)
   const quantidadePorDia = useMemo(() => {
     const mapa = new Map();
-    
     transacoes.forEach(t => {
       const quantidadeAtual = mapa.get(t.data) || 0;
-      mapa.set(t.data, quantidadeAtual + 1); 
+      mapa.set(t.data, quantidadeAtual + 1);
     });
-
     return mapa;
   }, [transacoes]);
 
-  // Calcular dívida acumulada
-  const divida = useMemo(() => {
-    const dias = eachDayOfInterval({
-      start: startOfMonth(mesAtual),
-      end: new Date() < endOfMonth(mesAtual) ? new Date() : endOfMonth(mesAtual)
-    });
-
-    let dividaAcumulada = 0;
-
+  // saldoAcumulado (sem alterações)
+  const saldoAcumulado = useMemo(() => {
+    const hoje = new Date();
+    const fimCalculo = hoje < endOfMonth(mesAtual) ? hoje : endOfMonth(mesAtual);
+    const dias = eachDayOfInterval({ start: startOfMonth(mesAtual), end: fimCalculo });
+    let saldo = 0;
     dias.forEach(dia => {
       const dataStr = format(dia, 'yyyy-MM-dd');
-      const gasto = gastosPorDia.get(dataStr) || 0;
-      const excedente = gasto - metaDiaria;
-      
-      if (excedente > 0) {
-        dividaAcumulada += excedente;
-      }
+      const gastoLiquidoDia = gastosPorDia.get(dataStr) || 0;
+      const diferenca = gastoLiquidoDia - metaDiaria;
+      saldo += diferenca;
     });
-
-    return dividaAcumulada;
+    return saldo;
   }, [gastosPorDia, metaDiaria, mesAtual]);
 
+  // salvarMeta (sem alterações)
   const salvarMeta = async () => {
     if (!currentUser || !novaMetaInput) return;
-    
     const novaMeta = parseFloat(novaMetaInput);
-    if (isNaN(novaMeta) || novaMeta <= 0) {
-      alert("Por favor, insira um valor válido.");
-      return;
-    }
-
-    await setDoc(doc(db, "metas", currentUser.uid), {
-      metaDiaria: novaMeta,
-      userId: currentUser.uid
-    });
-
+    if (isNaN(novaMeta) || novaMeta <= 0) { alert("Valor inválido."); return; }
+    await setDoc(doc(db, "metas", currentUser.uid), { metaDiaria: novaMeta, userId: currentUser.uid });
     setMetaDiaria(novaMeta);
     setEditandoMeta(false);
     setNovaMetaInput("");
   };
 
-  const abrirDetalhes = (dia) => {
-    setDiaSelecionado(dia);
-    setDialogAberto(true);
-  };
+  // abrirDetalhes (sem alterações)
+  const abrirDetalhes = (dia) => { setDiaSelecionado(dia); setDialogAberto(true); };
 
+  // transacoesDia (sem alterações)
   const transacoesDia = useMemo(() => {
     if (!diaSelecionado) return [];
-    
     const dataStr = format(diaSelecionado, 'yyyy-MM-dd');
     return transacoes.filter(t => t.data === dataStr);
   }, [diaSelecionado, transacoes]);
 
-  const totalDia = useMemo(() => {
-    return transacoesDia.reduce((acc, t) => acc + (t.valor || 0), 0);
+  // totalDiaLiquido (CORRIGIDO)
+  const totalDiaLiquido = useMemo(() => {
+    return transacoesDia.reduce((acc, t) => {
+      if (t.tipo === 'credito') return acc - (t.valor || 0);
+      return acc + (t.valor || 0);
+    }, 0);
   }, [transacoesDia]);
 
   return (
     <>
-    <div className="metas-container">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="metas-content"
-      >
-        {/* Header */}
-        <div className="metas-header">
-          <h1 className="metas-title">Metas de Gastos</h1>
-          <p className="metas-subtitle">Acompanhe seus gastos diários e mantenha-se no orçamento</p>
-        </div>
-
-        <div className="metas-cards-grid">
-          {/* Cards de Resumo */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="meta-card"
-            style={{ background: CARD_BG }}
-          >
-            <div className="meta-card-header">
-              <h3 className="meta-card-title">Meta Diária</h3>
-              <button 
-                onClick={() => {
-                  setNovaMetaInput(metaDiaria.toString());
-                  setEditandoMeta(true);
-                }}
-                className="meta-edit-btn"
-              >
-                Editar
-              </button>
-            </div>
-            <p className="meta-card-value">{numberToBRL(metaDiaria)}</p>
-            <p className="meta-card-label">por dia</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="meta-card"
-            style={{ background: CARD_BG }}
-          >
-            <h3 className="meta-card-title">Total Gasto (Mês)</h3>
-            <p className="meta-card-value">
-              {numberToBRL(Array.from(gastosPorDia.values()).reduce((a, b) => a + b, 0))}
-            </p>
-            <p className="meta-card-label">{format(mesAtual, "MMMM yyyy", { locale: ptBR })}</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="meta-card"
-            style={{ background: CARD_BG }}
-          >
-            <h3 className="meta-card-title">
-              {divida > 0 ? "Dívida Acumulada" : "Economia"}
-            </h3>
-            <p className={`meta-card-value ${divida > 0 ? 'meta-card-value--danger' : 'meta-card-value--success'}`}>
-              {numberToBRL(Math.abs(divida))}
-            </p>
-            <p className="meta-card-label">
-              {divida > 0 ? "acima da meta" : "dentro da meta"}
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Calendário */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="calendario-section"
-          style={{ background: CARD_BG }}
-        >
-          <div className="calendario-header">
-            <h2 className="calendario-title">
-              {format(mesAtual, "MMMM yyyy", { locale: ptBR })}
-            </h2>
-            <div className="calendario-nav">
-              <button
-                onClick={() => setMesAtual(new Date(mesAtual.getFullYear(), mesAtual.getMonth() - 1))}
-                className="calendario-nav-btn"
-              >
-                ← Anterior
-              </button>
-              <button
-                onClick={() => setMesAtual(new Date(mesAtual.getFullYear(), mesAtual.getMonth() + 1))}
-                className="calendario-nav-btn"
-              >
-                Próximo →
-              </button>
-            </div>
+      <div className="metas-container">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="metas-content" >
+          {/* Header */}
+          <div className="metas-header"> <h1 className="metas-title">Metas de Gastos</h1> <p className="metas-subtitle">Acompanhe seus gastos diários</p> </div>
+          {/* Cards Grid */}
+          <div className="metas-cards-grid">
+            {/* Meta Diária */}
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="meta-card" style={{ background: CARD_BG }} >
+              <div className="meta-card-header"> <h3 className="meta-card-title">Meta Diária</h3> <button onClick={() => { setNovaMetaInput(metaDiaria.toString()); setEditandoMeta(true); }} className="meta-edit-btn" >Editar</button> </div>
+              <p className="meta-card-value">{numberToBRL(metaDiaria)}</p> <p className="meta-card-label">por dia</p>
+            </motion.div>
+            {/* Saldo Líquido Mês */}
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="meta-card" style={{ background: CARD_BG }} >
+              <h3 className="meta-card-title">Saldo Líquido (Mês)</h3>
+              <p className={`meta-card-value ${Array.from(gastosPorDia.values()).reduce((a, b) => a + b, 0) > 0 ? 'meta-card-value--danger' : 'meta-card-value--success'}`}> {numberToBRL(Array.from(gastosPorDia.values()).reduce((a, b) => a + b, 0))} </p>
+              <p className="meta-card-label">{format(mesAtual, "MMMM yyyy", { locale: ptBR })}</p>
+            </motion.div>
+            {/* Acima/Dentro Meta */}
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="meta-card" style={{ background: CARD_BG }} >
+              <h3 className="meta-card-title"> {saldoAcumulado > 0 ? "Acima da Meta" : "Dentro da Meta"} </h3>
+              <p className={`meta-card-value ${saldoAcumulado > 0 ? 'meta-card-value--danger' : 'meta-card-value--success'}`}> {numberToBRL(Math.abs(saldoAcumulado))} </p>
+              <p className="meta-card-label"> {saldoAcumulado > 0 ? "acima" : "abaixo/dentro"} </p>
+            </motion.div>
           </div>
-
-          <CalendarioMetas
-            mesAtual={mesAtual}
-            gastosPorDia={gastosPorDia}
-            quantidadePorDia={quantidadePorDia}
-            metaDiaria={metaDiaria}
-            onDiaClick={abrirDetalhes}
-          />
+          {/* Calendário */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="calendario-section" style={{ background: CARD_BG }} >
+            <div className="calendario-header"> <h2 className="calendario-title">{format(mesAtual, "MMMM yyyy", { locale: ptBR })}</h2> <div className="calendario-nav"> <button onClick={() => setMesAtual(new Date(mesAtual.getFullYear(), mesAtual.getMonth() - 1))} className="calendario-nav-btn">← Anterior</button> <button onClick={() => setMesAtual(new Date(mesAtual.getFullYear(), mesAtual.getMonth() + 1))} className="calendario-nav-btn">Próximo →</button> </div> </div>
+            <CalendarioMetas mesAtual={mesAtual} gastosPorDia={gastosPorDia} quantidadePorDia={quantidadePorDia} metaDiaria={metaDiaria} onDiaClick={abrirDetalhes} />
+          </motion.div>
         </motion.div>
-      </motion.div>
-
-      {/* Modal para detalhes do dia */}
-      <AnimatePresence>
-        {dialogAberto && (
-          <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setDialogAberto(false)}
-          >
-            <motion.div
-              className="modal-content modal-content--metas"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="modal-header">
-                <h3>{diaSelecionado && format(diaSelecionado, "dd 'de' MMMM", { locale: ptBR })}</h3>
-                <button onClick={() => setDialogAberto(false)} className="modal-close-btn">&times;</button>
-              </div>
-
-              <div className="modal-body">
-                <div className="meta-detail-card">
-                  <span className="meta-detail-label">Total Gasto</span>
-                  <span className="meta-detail-value">{numberToBRL(totalDia)}</span>
-                </div>
-
-                <div className="meta-detail-card">
-                  <span className="meta-detail-label">Meta do Dia</span>
-                  <span className="meta-detail-value-small">{numberToBRL(metaDiaria)}</span>
-                </div>
-
-                <div className={`meta-detail-card meta-detail-card--${totalDia > metaDiaria ? 'danger' : 'success'}`}>
-                  <span className="meta-detail-label">Diferença</span>
-                  <span className={`meta-detail-value-small ${totalDia > metaDiaria ? 'meta-detail-value--danger' : 'meta-detail-value--success'}`}>
-                    {totalDia > metaDiaria ? '+' : ''}{numberToBRL(totalDia - metaDiaria)}
-                  </span>
-                </div>
-
-                {transacoesDia.length > 0 && (
-                  <div className="meta-transactions">
-                    <h4 className="meta-transactions-title">Transações</h4>
-                    <div className="meta-transactions-list">
-                      {transacoesDia.map(t => (
-                        <div key={t.id} className="meta-transaction-item">
-                          <span className="meta-transaction-desc">{t.descricao}</span>
-                          <span className="meta-transaction-value">{numberToBRL(t.valor)}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Modal para editar meta */}
-      <AnimatePresence>
-        {editandoMeta && (
-          <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setEditandoMeta(false)}
-          >
-            <motion.div
-              className="modal-content modal-content--edit"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="modal-header">
-                <h3>Editar Meta Diária</h3>
-                <button onClick={() => setEditandoMeta(false)} className="modal-close-btn">&times;</button>
-              </div>
-              
-              <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="nova-meta" className="form-label">Nova Meta (R$)</label>
-                  <input
-                    id="nova-meta"
-                    type="number"
-                    value={novaMetaInput}
-                    onChange={(e) => setNovaMetaInput(e.target.value)}
-                    placeholder="Ex: 100"
-                    step="0.01"
-                    min="0.01"
-                    className="form-input"
-                  />
-                </div>
-                
-                <div className="modal-actions">
-                  <button
-                    onClick={() => {
-                      setEditandoMeta(false);
-                      setNovaMetaInput("");
-                    }}
-                    className="modal-btn modal-btn--secondary"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={salvarMeta}
-                    className="modal-btn modal-btn--primary"
-                  >
-                    Salvar Meta
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        {/* Modal Detalhes */}
+        <AnimatePresence> {dialogAberto && ( <motion.div className="modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setDialogAberto(false)} > <motion.div className="modal-content modal-content--metas" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 20, opacity: 0 }} onClick={(e) => e.stopPropagation()} > <div className="modal-header"> <h3>{diaSelecionado && format(diaSelecionado, "dd 'de' MMMM", { locale: ptBR })}</h3> <button onClick={() => setDialogAberto(false)} className="modal-close-btn">&times;</button> </div> <div className="modal-body"> <div className="meta-detail-card"> <span className="meta-detail-label">Gasto Líquido Dia</span> <span className={`meta-detail-value ${totalDiaLiquido > 0 ? 'meta-detail-value--danger' : 'meta-detail-value--success'}`}>{numberToBRL(totalDiaLiquido)}</span> </div> <div className="meta-detail-card"> <span className="meta-detail-label">Meta do Dia</span> <span className="meta-detail-value-small">{numberToBRL(metaDiaria)}</span> </div> <div className={`meta-detail-card meta-detail-card--${totalDiaLiquido > metaDiaria ? 'danger' : 'success'}`}> <span className="meta-detail-label">Diferença</span> <span className={`meta-detail-value-small ${totalDiaLiquido > metaDiaria ? 'meta-detail-value--danger' : 'meta-detail-value--success'}`}> {totalDiaLiquido > metaDiaria ? '+' : ''}{numberToBRL(totalDiaLiquido - metaDiaria)} </span> </div> {transacoesDia.length > 0 && ( <div className="meta-transactions"> <h4 className="meta-transactions-title">Transações</h4> <div className="meta-transactions-list"> {transacoesDia.map(t => ( <div key={t.id} className="meta-transaction-item"> <span className="meta-transaction-desc">{t.descricao}</span> <span className={`meta-transaction-value ${t.tipo === 'credito' ? 'meta-transaction-value--credit' : ''}`}> {t.tipo === 'credito' ? '+' : ''}{numberToBRL(t.valor)} </span> </div> ))} </div> </div> )} </div> </motion.div> </motion.div> )} </AnimatePresence>
+        {/* Modal Editar Meta */}
+        <AnimatePresence> {editandoMeta && ( <motion.div className="modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setEditandoMeta(false)} > <motion.div className="modal-content modal-content--edit" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 20, opacity: 0 }} onClick={(e) => e.stopPropagation()} > <div className="modal-header"><h3>Editar Meta Diária</h3><button onClick={() => setEditandoMeta(false)} className="modal-close-btn">&times;</button></div> <div className="modal-body"> <div className="form-group"> <label htmlFor="nova-meta" className="form-label">Nova Meta (R$)</label> <input id="nova-meta" type="number" value={novaMetaInput} onChange={(e) => setNovaMetaInput(e.target.value)} placeholder="Ex: 100" step="0.01" min="0.01" className="form-input" /> </div> <div className="modal-actions"> <button onClick={() => { setEditandoMeta(false); setNovaMetaInput(""); }} className="modal-btn modal-btn--secondary">Cancelar</button> <button onClick={salvarMeta} className="modal-btn modal-btn--primary">Salvar Meta</button> </div> </div> </motion.div> </motion.div> )} </AnimatePresence>
+      </div>
     </>
   );
 }
 
+// --- CalendarioMetas CORRIGIDO ---
 function CalendarioMetas({ mesAtual, gastosPorDia, quantidadePorDia, metaDiaria, onDiaClick }) {
   const dias = eachDayOfInterval({
     start: startOfMonth(mesAtual),
@@ -409,65 +187,81 @@ function CalendarioMetas({ mesAtual, gastosPorDia, quantidadePorDia, metaDiaria,
   });
 
   const hoje = new Date();
-  const primeiroDia = startOfMonth(mesAtual).getDay();
+  // Garante que 'hoje' não tenha horas/minutos para comparação segura
+  hoje.setHours(0, 0, 0, 0); 
+  const primeiroDiaSemana = startOfMonth(mesAtual).getDay(); // 0 = Domingo
 
   return (
     <div className="calendario-grid">
-      {/* ... (renderização dos weekdays) ... */}
+      {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(dia => (
+        <div key={dia} className="calendario-weekday">{dia}</div>
+      ))}
 
-      {/* ... (renderização dos dias vazios) ... */}
+      {Array.from({ length: primeiroDiaSemana }).map((_, i) => (
+        <div key={`empty-${i}`} /> // Espaços vazios antes do dia 1
+      ))}
 
       {dias.map(dia => {
-        const dataStr = format(dia, 'yyyy-MM-dd');
-        const gasto = gastosPorDia.get(dataStr) || 0;
+        // Zera horas/minutos do dia atual do loop para comparação segura
+        const diaAtualLoop = new Date(dia);
+        diaAtualLoop.setHours(0, 0, 0, 0);
+
+        const dataStr = format(diaAtualLoop, 'yyyy-MM-dd');
+        const gastoLiquido = gastosPorDia.get(dataStr) || 0;
         const quantidade = quantidadePorDia.get(dataStr) || 0;
-        const excedeu = gasto > metaDiaria;
-        const temGasto = gasto > 0;
-        const ehHoje = isSameDay(dia, hoje);
-        const ehFuturo = dia > hoje;
+        
+        // Verifica se o gasto LÍQUIDO excedeu a meta
+        const excedeu = gastoLiquido > metaDiaria;
+        
+        // Flags de data
+        const ehHoje = isSameDay(diaAtualLoop, hoje);
+        const ehFuturo = diaAtualLoop > hoje;
+        const ehPassado = diaAtualLoop < hoje;
 
-        // 1. CRIE ESTA NOVA VARIÁVEL
-        const ehPassado = !ehFuturo && !ehHoje; 
-
+        // Classe base do botão
         let className = 'calendario-day';
         if (ehFuturo) className += ' calendario-day--futuro';
         if (ehHoje) className += ' calendario-day--hoje';
         
-        // Adiciona a classe 'ok' para dias passados sem gastos
-        if (temGasto) {
-          className += excedeu ? ' calendario-day--excedeu' : ' calendario-day--ok';
-        } else if (ehPassado) { // <-- ADICIONE ESTE ELSE IF
-          className += ' calendario-day--ok';
+        // Aplica classe de cor (ok/excedeu) apenas para dias passados ou hoje
+        if (ehPassado || ehHoje) {
+             // Se houve qualquer transação OU se é um dia passado sem transação
+             if (gastosPorDia.has(dataStr) || (ehPassado && !gastosPorDia.has(dataStr))) {
+                 className += excedeu ? ' calendario-day--excedeu' : ' calendario-day--ok';
+             }
+             // Se for hoje e não houve transação, não adiciona classe de cor
         }
+
 
         return (
           <motion.button
             key={dataStr}
             whileHover={{ scale: ehFuturo ? 1 : 1.05 }}
             whileTap={{ scale: ehFuturo ? 1 : 0.95 }}
-            onClick={() => !ehFuturo && onDiaClick(dia)}
+            onClick={() => !ehFuturo && onDiaClick(diaAtualLoop)} // Passa diaAtualLoop zerado
             disabled={ehFuturo}
             className={className}
           >
-            <div className="calendario-day-number">
-              {format(dia, 'd')}
-            </div>
+            <div className="calendario-day-number">{format(diaAtualLoop, 'd')}</div>
 
-            {/* Este bloco continua igual, só mostra se tem gasto */}
-            {temGasto && (
+            {/* Mostra valor e contagem apenas se houve transações e não for futuro */}
+            {quantidade > 0 && !ehFuturo && (
               <>
                 <div className={`calendario-day-value ${excedeu ? 'calendario-day-value--danger' : 'calendario-day-value--success'}`}>
-                  {numberToBRL(gasto)}
+                  {numberToBRL(gastoLiquido)}
                 </div>
-                <div className="calendario-day-count">
-                  {quantidade} {quantidade === 1 ? 'gasto' : 'gastos'}
-                </div>
+                 <div className="calendario-day-count">
+                    {quantidade} {quantidade === 1 ? 'trans.' : 'trans.'}
+                 </div>
               </>
             )}
             
-            {/* 2. MUDE A CONDIÇÃO AQUI */}
-            {(temGasto || ehPassado) && (
+            {/* --- CONDIÇÃO DO INDICADOR CORRIGIDA --- */}
+            {/* Mostra o indicador para dias passados OU para hoje */}
+            {(ehPassado || ehHoje) && (
               <div className="calendario-day-indicator">
+                 {/* A cor do ponto reflete se o gasto LÍQUIDO excedeu */}
+                 {/* Se for dia passado sem gasto, excedeu=false -> success */}
                 <div className={`calendario-day-dot ${excedeu ? 'calendario-day-dot--danger' : 'calendario-day-dot--success'}`} />
               </div>
             )}

@@ -5,13 +5,28 @@ import Header from '../components/header';
 import "../assets/css/dashboard.css";
 
 import { db } from "../firebase/config";
-import { collection, query, where, onSnapshot, addDoc, serverTimestamp, orderBy } from "firebase/firestore";
+import { 
+  collection, query, where, onSnapshot, 
+  addDoc, serverTimestamp, orderBy, 
+  writeBatch, doc, 
+  deleteDoc
+} from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext";
 
 
 const CARD_BG = "rgba(255,255,255,0.04)";
 const CARD_BORDER = "linear-gradient(120deg, #3B82F6 0%, #9333EA 100%)";
 const COLORS = ["#7C3AED", "#2563EB", "#9333EA", "#3B82F6", "#A78BFA", "#60A5FA"];
+
+// --- FUNÇÕES HELPER (sem alterações) ---
+
+function getTodayLocalString() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 function numberToBRL(n) {
   if (typeof n !== 'number') return 'R$ 0,00';
@@ -28,6 +43,58 @@ function normalizarDescricao(descricao) {
   return descricao.split(' *')[0].trim();
 }
 
+const mesMap = {
+  'JAN': '01', 'FEV': '02', 'MAR': '03', 'ABR': '04', 
+  'MAI': '05', 'JUN': '06', 'JUL': '07', 'AGO': '08', 
+  'SET': '09', 'OUT': '10', 'NOV': '11', 'DEZ': '12'
+};
+
+function formatarDataJson(dataStr) {
+  try {
+    const [dia, mesAbv] = dataStr.split(' ');
+    const mes = mesMap[mesAbv.toUpperCase()];
+    if (!mes) throw new Error(`Mês inválido: ${mesAbv}`);
+    
+    const hoje = new Date();
+    const anoAtual = hoje.getFullYear();
+    const mesAtual = hoje.getMonth() + 1; 
+
+    let ano = anoAtual;
+    if (parseInt(mes, 10) > mesAtual) {
+      ano = anoAtual - 1;
+    }
+    
+    return `${ano}-${mes}-${String(dia).padStart(2, '0')}`;
+  } catch (error) {
+    console.error("Erro ao formatar data:", dataStr, error);
+    return null;
+  }
+}
+
+function formatarValorJson(valorStr) {
+  try {
+    const ehNegativo = valorStr.includes('-');
+    const valorLimpo = valorStr
+      .replace('R$', '')
+      .replace('-', '')
+      .replace(/\./g, '') 
+      .replace(',', '.')
+      .trim();
+    
+    let valor = parseFloat(valorLimpo);
+
+    if (ehNegativo && valor > 0) { 
+      valor = -valor;
+    }
+    return valor;
+  } catch (error) {
+    console.error("Erro ao formatar valor:", valorStr, error);
+    return NaN;
+  }
+}
+
+// --- COMPONENTE PRINCIPAL (sem alterações) ---
+
 export default function DashboardPage() {
   const [pagina, setPagina] = useState('dashboard');
   const [transacoes, setTransacoes] = useState([]);
@@ -41,29 +108,23 @@ export default function DashboardPage() {
       setCarregando(false);
       return;
     }
-
     setCarregando(true);
     const transacoesCollectionRef = collection(db, "transacoes");
-
     const q = query(
       transacoesCollectionRef,
       where("userId", "==", currentUser.uid),
       orderBy("criadoEm", "desc")
     );
-
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const transacoesFormatadas = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
-  
         data: doc.data().data
       }));
       setTransacoes(transacoesFormatadas);
       setCarregando(false);
     });
-
     return () => unsubscribe();
-
   }, [currentUser?.uid]);
 
 
@@ -72,15 +133,10 @@ export default function DashboardPage() {
       alert("Você precisa estar logado para adicionar uma transação.");
       return;
     }
-    
-    const hoje = new Date();
-    hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
-    const dataFormatada = hoje.toISOString().split('T')[0];
-
+    setCarregando(true); 
     try {
       await addDoc(collection(db, "transacoes"), {
-        ...novaTransacao,
-        data: dataFormatada,
+        ...novaTransacao, 
         tipo: 'debito',
         forma_pagamento: 'Cartão 8125',
         userId: currentUser.uid,
@@ -90,6 +146,75 @@ export default function DashboardPage() {
     } catch (error) {
       console.error("Erro ao adicionar transação: ", error);
       alert("Ocorreu um erro ao salvar o gasto.");
+      setCarregando(false);
+    }
+  };
+
+  const handleImportarTransacoes = async (transacoesArray) => {
+    if (!currentUser) {
+      alert("Você precisa estar logado para importar.");
+      return;
+    }
+    
+    setCarregando(true);
+    
+    const batch = writeBatch(db);
+    const transacoesCollectionRef = collection(db, "transacoes");
+    let sucessoCount = 0;
+    let falhaCount = 0;
+
+    for (const transacao of transacoesArray) {
+      const dataFormatada = formatarDataJson(transacao.Data);
+      const valorFormatado = formatarValorJson(transacao.Valor);
+      
+      if (!dataFormatada || isNaN(valorFormatado) || !transacao.Nome) {
+        console.warn("Item pulado (dados inválidos):", transacao);
+        falhaCount++;
+        continue; 
+      }
+
+      const ehCredito = valorFormatado < 0;
+      const tipoTransacao = ehCredito ? 'credito' : 'debito';
+      const valorParaSalvar = ehCredito ? Math.abs(valorFormatado) : valorFormatado;
+
+      const newDocRef = doc(transacoesCollectionRef); 
+      batch.set(newDocRef, {
+        descricao: transacao.Nome,
+        valor: valorParaSalvar,
+        data: dataFormatada,
+        tipo: tipoTransacao,
+        forma_pagamento: 'Importado',
+        userId: currentUser.uid,
+        criadoEm: serverTimestamp()
+      });
+      sucessoCount++;
+    }
+
+    try {
+      await batch.commit();
+      alert(`${sucessoCount} transações importadas com sucesso! ${falhaCount > 0 ? `(${falhaCount} falharam)` : ''}`);
+      setPagina('dashboard');
+    } catch (error) {
+      console.error("Erro ao importar transações em lote: ", error);
+      alert("Ocorreu um erro ao salvar os gastos.");
+      setCarregando(false);
+    }
+  };
+
+  const handleRemoverTransacao = async (id) => {
+    if (!currentUser) {
+      alert("Você precisa estar logado para remover uma transação.");
+      return;
+    }
+    if (!window.confirm("Tem certeza que deseja remover este gasto?")) {
+      return;
+    }
+    try {
+      const docRef = doc(db, "transacoes", id);
+      await deleteDoc(docRef);
+    } catch (error) {
+      console.error("Erro ao remover transação: ", error);
+      alert("Ocorreu um erro ao remover o gasto.");
     }
   };
 
@@ -100,12 +225,18 @@ export default function DashboardPage() {
       <div className="dashboard-container">
         <main className="main-content">
           <SubHeader pagina={pagina} setPagina={setPagina} />
-          {carregando ? ( // Mostra mensagem de carregamento
+          {carregando ? (
             <p>Carregando transações...</p>
           ) : (
             <>
-              {pagina === 'dashboard' && <DashboardView transacoes={transacoes} />}
+              {pagina === 'dashboard' && (
+                <DashboardView 
+                  transacoes={transacoes} 
+                  onRemoverTransacao={handleRemoverTransacao} 
+                />
+              )}
               {pagina === 'adicionar' && <PaginaAdicionarGasto onAdicionarTransacao={handleAdicionarTransacao} />}
+              {pagina === 'importar' && <PaginaImportarJSON onImportarTransacoes={handleImportarTransacoes} />}
             </>
           )}
         </main>
@@ -114,6 +245,7 @@ export default function DashboardPage() {
   );
 }
 
+// SubHeader (sem alterações)
 function SubHeader({ pagina, setPagina }) {
   return (
     <header className="dashboard-header">
@@ -127,19 +259,35 @@ function SubHeader({ pagina, setPagina }) {
         <nav className="header-nav">
           <button onClick={() => setPagina('dashboard')} className={pagina === 'dashboard' ? 'active' : ''}>Dashboard</button>
           <button onClick={() => setPagina('adicionar')} className={pagina === 'adicionar' ? 'active' : ''}>Adicionar Gasto</button>
+          <button onClick={() => setPagina('importar')} className={pagina === 'importar' ? 'active' : ''}>Importar JSON</button>
         </nav>
       </div>
     </header>
   );
 }
 
-function DashboardView({ transacoes }) {
+// --- DashboardView MODIFICADO ---
+function DashboardView({ transacoes, onRemoverTransacao }) {
   const [modalData, setModalData] = useState(null);
 
+  // 1. Cálculo 1: Total de Débitos (para o gráfico/categorias)
   const totalDebito = useMemo(() => {
     return transacoes
-      .filter(t => t.tipo === "debito")
+      .filter(t => t.tipo === "debito") 
       .reduce((acc, t) => acc + (t.valor || 0), 0);
+  }, [transacoes]);
+
+  // 2. Cálculo 2: Saldo Líquido (para o KPI principal)
+  const saldoLiquido = useMemo(() => {
+    return transacoes.reduce((acc, t) => {
+      if (t.tipo === "debito") {
+        return acc + (t.valor || 0); // Soma gastos
+      }
+      if (t.tipo === "credito") {
+        return acc - (t.valor || 0); // Subtrai estornos
+      }
+      return acc;
+    }, 0);
   }, [transacoes]);
 
 
@@ -154,8 +302,14 @@ function DashboardView({ transacoes }) {
         className="dashboard-layout"
       >
         <div className="layout-col--sidebar">
-          <KPI title="Total de Gastos" value={numberToBRL(totalDebito)} highlight="negativo" />
+          {/* 3. KPI atualizado para mostrar o Saldo Líquido */}
+          <KPI 
+            title="Saldo Líquido" 
+            value={numberToBRL(saldoLiquido)} 
+            highlight={saldoLiquido > 0 ? "negativo" : "positivo"} 
+          />
 
+          {/* 4. GastosAgrupados continua usando o totalDebito (correto) */}
           <GastosAgrupados 
             transacoes={transacoes} 
             onGastoClick={setModalData} 
@@ -164,26 +318,39 @@ function DashboardView({ transacoes }) {
         </div>
         <div className="layout-col--main">
           <Card title="Todas as Transações">
-            <TabelaTransacoes transacoes={transacoes} />
+            <TabelaTransacoes 
+              transacoes={transacoes} 
+              onRemoverTransacao={onRemoverTransacao} 
+            />
           </Card>
         </div>
       </motion.div>
       
       <AnimatePresence>
-        {modalData && <ModalDetalhesGasto data={modalData} onClose={() => setModalData(null)} />}
+        {modalData && (
+          <ModalDetalhesGasto 
+            data={modalData} 
+            onClose={() => setModalData(null)} 
+            onRemoverTransacao={onRemoverTransacao}
+          />
+        )}
       </AnimatePresence>
     </>
   );
 }
 
-function TabelaTransacoes({ transacoes }) {
-  // 5. REMOVIDO o slice e o reverse para mostrar TODAS as transações na ordem original
+// TabelaTransacoes (sem alterações)
+function TabelaTransacoes({ transacoes, onRemoverTransacao }) {
   return (
     <div className="table-wrapper">
       <table className="transactions-table">
         <thead>
           <tr>
-            <th>Data</th><th>Descrição</th><th>Tipo</th><th>Valor</th>
+            <th>Data</th>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -193,6 +360,15 @@ function TabelaTransacoes({ transacoes }) {
               <td>{t.descricao}</td>
               <td><span className={`transaction-badge transaction-badge--${t.tipo}`}>{t.tipo}</span></td>
               <td>{numberToBRL(t.valor)}</td>
+              <td>
+                <button 
+                  onClick={() => onRemoverTransacao(t.id)} 
+                  className="btn-remover"
+                  title="Remover transação"
+                >
+                  &times;
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -201,6 +377,7 @@ function TabelaTransacoes({ transacoes }) {
   );
 }
 
+// GastosAgrupados (sem alterações)
 function GastosAgrupados({ transacoes, onGastoClick, totalDebito }) { 
     const gastosAgrupados = useMemo(() => {
         const mapa = new Map();
@@ -252,8 +429,8 @@ function GastosAgrupados({ transacoes, onGastoClick, totalDebito }) {
   );
 }
 
-
-function ModalDetalhesGasto({ data, onClose }) {
+// ModalDetalhesGasto (sem alterações)
+function ModalDetalhesGasto({ data, onClose, onRemoverTransacao }) {
   return (
     <motion.div
       className="modal-overlay"
@@ -285,6 +462,13 @@ function ModalDetalhesGasto({ data, onClose }) {
                 <span>{new Date(t.data + "T03:00:00Z").toLocaleDateString("pt-BR", { timeZone: 'UTC' })}</span>
                 <span title={t.descricao}>{t.descricao}</span>
                 <strong>{numberToBRL(t.valor)}</strong>
+                <button 
+                  onClick={() => onRemoverTransacao(t.id)} 
+                  className="btn-remover-modal"
+                  title="Remover transação"
+                >
+                  &times;
+                </button>
               </li>
             ))}
           </ul>
@@ -294,6 +478,7 @@ function ModalDetalhesGasto({ data, onClose }) {
   );
 }
 
+// KPI (sem alterações)
 function KPI({ title, value, highlight }) {
   return (
     <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="kpi-card" style={{ background: CARD_BG}}>
@@ -303,31 +488,38 @@ function KPI({ title, value, highlight }) {
   );
 }
 
+// PaginaAdicionarGasto (sem alterações)
 function PaginaAdicionarGasto({ onAdicionarTransacao }) {
   const [descricao, setDescricao] = useState('');
   const [valor, setValor] = useState('');
+  const [data, setData] = useState(getTodayLocalString());
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!descricao.trim() || !valor || isNaN(parseFloat(valor)) || parseFloat(valor) <= 0) {
-      alert("Por favor, preencha a descrição e um valor válido.");
+    if (!descricao.trim() || !valor || isNaN(parseFloat(valor)) || parseFloat(valor) <= 0 || !data) {
+      alert("Por favor, preencha a descrição, data e um valor válido.");
       return;
     }
-    onAdicionarTransacao({ descricao: descricao.trim(), valor: parseFloat(valor) });
+    onAdicionarTransacao({ 
+      descricao: descricao.trim(), 
+      valor: parseFloat(valor),
+      data: data 
+    });
     setDescricao('');
     setValor('');
+    setData(getTodayLocalString());
   };
 
   return (
     <motion.div 
-        key="add-gasto-view"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 10}}
-        transition={{ duration: 0.3 }}
-        className="adicionar-gasto-container"
+      key="add-gasto-view"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10}}
+      transition={{ duration: 0.3 }}
+      className="adicionar-gasto-container"
     >
-      <Card title="Adicionar Gasto do Dia">
+      <Card title="Adicionar Gasto">
         <form onSubmit={handleSubmit} className="adicionar-gasto-form">
           <div className="form-group">
             <label htmlFor="descricao">Descrição</label>
@@ -337,6 +529,18 @@ function PaginaAdicionarGasto({ onAdicionarTransacao }) {
             <label htmlFor="valor">Valor (R$)</label>
             <input id="valor" type="number" value={valor} onChange={e => setValor(e.target.value)} placeholder="Ex: 25.50" step="0.01" min="0.01" required />
           </div>
+          
+          <div className="form-group">
+            <label htmlFor="data">Data</label>
+            <input 
+              id="data" 
+              type="date" 
+              value={data} 
+              onChange={e => setData(e.target.value)} 
+              required 
+            />
+          </div>
+
           <button type="submit" className="form-submit-btn" style={{ background: CARD_BORDER }}>Adicionar Gasto</button>
         </form>
       </Card>
@@ -344,8 +548,71 @@ function PaginaAdicionarGasto({ onAdicionarTransacao }) {
   );
 }
 
-// No final do seu arquivo, na função Card:
+// PaginaImportarJSON (sem alterações)
+function PaginaImportarJSON({ onImportarTransacoes }) {
+  const [jsonInput, setJsonInput] = useState('');
+  const [isImportando, setIsImportando] = useState(false);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsImportando(true);
+
+    let transacoesArray;
+    try {
+      const jsonLimpo = jsonInput.replace(/\u00A0/g, ' ');
+      transacoesArray = JSON.parse(jsonLimpo);
+    } catch (error) {
+      console.error("Erro de Parse JSON:", error);
+      alert("Erro no JSON. Verifique se o formato está correto. (Ex: [ { ... }, { ... } ])");
+      setIsImportando(false);
+      return;
+    }
+    if (!Array.isArray(transacoesArray)) {
+      alert("O JSON deve ser um array (lista) de transações.");
+      setIsImportando(false);
+      return;
+    }
+    try {
+      await onImportarTransacoes(transacoesArray);
+    } catch (error) {
+      console.error(error);
+    }
+    setIsImportando(false);
+    setJsonInput('');
+  };
+
+  return (
+    <motion.div 
+      key="import-json-view"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10}}
+      transition={{ duration: 0.3 }}
+      className="adicionar-gasto-container"
+    >
+      <Card title="Importar Gastos com JSON">
+        <form onSubmit={handleSubmit} className="adicionar-gasto-form">
+          <div className="form-group">
+            <label htmlFor="json-input">Cole seu JSON aqui</label>
+            <textarea 
+              id="json-input"
+              value={jsonInput}
+              onChange={e => setJsonInput(e.target.value)}
+              placeholder='[&#10;  { "Data": "09 OUT", "Nome": "Pg *99 Ride", "Valor": "R$ 13,08" },&#10;  { "Data": "10 OUT", "Nome": "Estorno", "Valor": "-R$ 45,50" }&#10;]'
+              rows={10}
+              required
+            />
+          </div>
+          <button type="submit" className="form-submit-btn" style={{ background: CARD_BORDER }} disabled={isImportando}>
+            {isImportando ? 'Importando...' : 'Importar Gastos'}
+          </button>
+        </form>
+      </Card>
+    </motion.div>
+  );
+}
+
+// Card (sem alterações)
 function Card({ title, children }) {
   return (
     <motion.section 
