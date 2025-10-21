@@ -1,0 +1,602 @@
+/*!********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs.js!./resources/scss/budgetPlanner.scss ***!
+  \********************************************************************************************************************************************************/
+@charset "UTF-8";
+/* Keyframes permanecem no nível superior */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+/* Estrutura Principal do Orçamento (Budget) */
+.budget-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+  padding: 2rem;
+}
+@media (max-width: 768px) {
+  .budget-container {
+    padding: 1rem;
+  }
+}
+
+.budget-content {
+  max-width: 1600px;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+.budget-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.budget-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .budget-title {
+    font-size: 2rem;
+  }
+}
+
+.budget-subtitle {
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 1rem;
+}
+
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+  .budget-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Componente: Glass Cards */
+.glass-card {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.04);
+  margin-bottom: 1.5rem;
+}
+.glass-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.glass-card-title {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.glass-card-title svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.glass-card-body {
+  color: #fff;
+}
+
+/* Componente: Progresso Circular */
+.circular-progress-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.circular-progress {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+.circular-progress svg {
+  transform: rotate(-90deg);
+}
+.circular-progress-bg {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+.circular-progress-bar {
+  transition: stroke-dashoffset 0.5s ease;
+  stroke-linecap: round;
+}
+.circular-progress-bar.success {
+  stroke: #10B981;
+}
+.circular-progress-bar.warning {
+  stroke: #F59E0B;
+}
+.circular-progress-bar.danger {
+  stroke: #EF4444;
+}
+.circular-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.circular-progress-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+.circular-progress-value.success {
+  color: #10B981;
+}
+.circular-progress-value.danger {
+  color: #EF4444;
+}
+@media (max-width: 768px) {
+  .circular-progress-value {
+    font-size: 1.5rem;
+  }
+}
+.circular-progress-label {
+  font-size: 0.875rem;
+  color: rgb(148, 163, 184);
+  margin-top: 0.25rem;
+}
+
+/* Componente: Elementos de Formulário */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.glass-input {
+  width: calc(100% - 20px);
+  padding: 15px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+.glass-input:focus {
+  border-color: #3B82F6;
+  background: rgba(255, 255, 255, 0.08);
+}
+.glass-input::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.glass-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+.glass-select:focus {
+  border-color: #3B82F6;
+  background: rgba(255, 255, 255, 0.08);
+}
+.glass-select option {
+  background: #0f172a;
+  color: #fff;
+}
+
+/* Componente: Botões */
+.btn {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, #3B82F6 0%, #9333EA 100%);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: linear-gradient(120deg, #2563EB 0%, #7C3AED 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-icon {
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.btn-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: none;
+  color: rgb(148, 163, 184);
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.btn-ghost svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Componente: Lista de Itens */
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s;
+}
+.item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(2px);
+}
+.item-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+.item-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.item-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.item-icon.success svg {
+  color: #10B981;
+}
+.item-icon.danger svg {
+  color: #EF4444;
+}
+.item-icon.warning svg {
+  color: #F59E0B;
+}
+.item-info {
+  flex: 1;
+}
+.item-description {
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+.item-value {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.item-value.success {
+  color: #10B981;
+}
+.item-value.danger {
+  color: #EF4444;
+}
+.item-value.danger::before {
+  content: "-";
+  padding-right: 3px;
+}
+.item-value.warning {
+  color: #F59E0B;
+}
+
+/* Componente: Sumário */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  color: rgba(203, 213, 225, 0.9);
+}
+.summary-row.total {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.summary-label {
+  color: rgb(148, 163, 184);
+}
+
+.summary-value {
+  font-weight: 600;
+}
+.summary-value.success {
+  color: #10B981;
+}
+.summary-value.danger {
+  color: #EF4444;
+}
+.summary-value.danger::before {
+  content: "-";
+  padding-right: 3px;
+}
+.summary-value.warning {
+  color: #F59E0B;
+}
+
+/* Componente: Barras de Progresso */
+.progress-item {
+  margin-bottom: 1.25rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.progress-label {
+  color: rgb(148, 163, 184);
+}
+
+.progress-value {
+  font-weight: 600;
+  color: #fff;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 1rem;
+}
+.progress-bar.success {
+  background: #10B981;
+}
+.progress-bar.danger {
+  background: #EF4444;
+}
+.progress-bar.warning {
+  background: #F59E0B;
+}
+
+/* Componente: Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #0f172a;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 32rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #fff;
+  backdrop-filter: blur(20px);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #fff;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  border-radius: 0.25rem;
+  transition: background 0.2s;
+}
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+/* Componente: Alerta */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+.alert.danger {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #FCA5A5;
+}
+.alert.success {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #6EE7B7;
+}
+
+/* Componente: Estado Vazio */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: rgb(148, 163, 184);
+  font-size: 0.875rem;
+}
+
+/* Componente: Exibição de Salário */
+.salary-display {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.salary-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #10B981;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .salary-value {
+    font-size: 2rem;
+  }
+}
+
+.salary-label {
+  font-size: 0.875rem;
+  color: rgb(148, 163, 184);
+}
+
+/* Componente: Informação de Previsão */
+.forecast-info {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1rem;
+}
+
+.forecast-text {
+  font-size: 0.875rem;
+  color: rgba(203, 213, 225, 0.9);
+  line-height: 1.5;
+}
+
+/* Utilitários de Animação */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}

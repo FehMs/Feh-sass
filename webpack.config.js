@@ -9,6 +9,7 @@ const sassFiles = [
     "footer.scss",
     "dashboard.scss",
     "metas.scss",
+    "budgetPlanner.scss",
 ];
 
 module.exports = (env, argv) => {

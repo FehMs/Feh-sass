@@ -1,0 +1,635 @@
+/* Keyframes permanecem no nível superior */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Estrutura Principal do Orçamento (Budget) */
+.budget-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}
+
+.budget-content {
+  max-width: 1600px;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+.budget-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.budget-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.budget-subtitle {
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 1rem;
+}
+
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Componente: Glass Cards */
+.glass-card {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.04);
+  margin-bottom: 1.5rem;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  &-title {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  &-body {
+    color: #fff;
+  }
+}
+
+/* Componente: Progresso Circular */
+.circular-progress-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.circular-progress {
+  position: relative;
+  width: 200px;
+  height: 200px;
+
+  svg {
+    transform: rotate(-90deg);
+  }
+
+  &-bg {
+    stroke: rgba(255, 255, 255, 0.1);
+  }
+
+  &-bar {
+    transition: stroke-dashoffset 0.5s ease;
+    stroke-linecap: round;
+
+    &.success {
+      stroke: #10B981;
+    }
+    &.warning {
+      stroke: #F59E0B;
+    }
+    &.danger {
+      stroke: #EF4444;
+    }
+  }
+
+  &-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  &-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #fff;
+
+    &.success {
+      color: #10B981;
+    }
+    &.danger {
+      color: #EF4444;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &-label {
+    font-size: 0.875rem;
+    color: rgba(148, 163, 184, 1);
+    margin-top: 0.25rem;
+  }
+
+}
+
+/* Componente: Elementos de Formulário */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.glass-input {
+  width: calc(100% - 20px);
+  padding: 15px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+
+  &:focus {
+    border-color: #3B82F6;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &::placeholder {
+    color: rgba(148, 163, 184, 0.6);
+  }
+}
+
+.glass-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+
+  &:focus {
+    border-color: #3B82F6;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  option {
+    background: #0f172a;
+    color: #fff;
+  }
+}
+
+/* Componente: Botões */
+.btn {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, #3B82F6 0%, #9333EA 100%);
+  color: #fff;
+
+  &:hover {
+    background: linear-gradient(120deg, #2563EB 0%, #7C3AED 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.btn-icon {
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.btn-ghost {
+  background: transparent;
+  border: none;
+  color: rgba(148, 163, 184, 1);
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+/* Componente: Lista de Itens */
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(2px);
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  &-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    &.success svg {
+      color: #10B981;
+    }
+    &.danger svg {
+      color: #EF4444;
+    }
+    &.warning svg {
+      color: #F59E0B;
+    }
+  }
+
+  &-info {
+    flex: 1;
+  }
+
+  &-description {
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  &-value {
+    font-weight: 600;
+    font-size: 0.875rem;
+
+    &.success {
+      color: #10B981;
+    }
+    &.danger {
+      color: #EF4444;
+      &::before{
+        content: "-";
+        padding-right: 3px;
+      }
+    }
+    &.warning {
+      color: #F59E0B;
+    }
+  }
+}
+
+/* Componente: Sumário */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  color: rgba(203, 213, 225, 0.9);
+
+  &.total {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+}
+
+.summary-label {
+  color: rgba(148, 163, 184, 1);
+}
+
+.summary-value {
+  font-weight: 600;
+
+  &.success {
+    color: #10B981;
+  }
+  &.danger {
+    color: #EF4444;
+    &::before{
+        content: "-";
+        padding-right: 3px;
+    }
+  }
+  &.warning {
+    color: #F59E0B;
+  }
+}
+
+/* Componente: Barras de Progresso */
+.progress-item {
+  margin-bottom: 1.25rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.progress-label {
+  color: rgba(148, 163, 184, 1);
+}
+
+.progress-value {
+  font-weight: 600;
+  color: #fff;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 1rem;
+
+  &.success {
+    background: #10B981;
+  }
+  &.danger {
+    background: #EF4444;
+  }
+  &.warning {
+    background: #F59E0B;
+  }
+}
+
+/* Componente: Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.modal-content {
+  background: #0f172a;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 32rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #fff;
+  backdrop-filter: blur(20px);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #fff;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  border-radius: 0.25rem;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+/* Componente: Alerta */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+
+  &.danger {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #FCA5A5;
+  }
+
+  &.success {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: #6EE7B7;
+  }
+}
+
+/* Componente: Estado Vazio */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: rgba(148, 163, 184, 1);
+  font-size: 0.875rem;
+}
+
+/* Componente: Exibição de Salário */
+.salary-display {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.salary-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #10B981;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.salary-label {
+  font-size: 0.875rem;
+  color: rgba(148, 163, 184, 1);
+}
+
+/* Componente: Informação de Previsão */
+.forecast-info {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1rem;
+}
+
+.forecast-text {
+  font-size: 0.875rem;
+  color: rgba(203, 213, 225, 0.9);
+  line-height: 1.5;
+}
+
+/* Utilitários de Animação */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}

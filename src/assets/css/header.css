@@ -3,8 +3,9 @@
   \*************************************************************************************************************************************************/
 @charset "UTF-8";
 .app-header {
-  background: linear-gradient(90deg, #1f1c2c, #928DAB);
-  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  padding: 1rem 0px;
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -88,6 +89,15 @@
   align-items: center;
   gap: 1rem;
 }
+.app-header .header-container .user-info .navbar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.app-header .header-container .user-info .navbar a {
+  color: #fff;
+  font-size: 16px;
+}
 @media (max-width: 768px) {
   .app-header .header-container .user-info .navbar {
     display: none;
@@ -99,19 +109,21 @@
 }
 
 .app-header {
-  background: #111;
   color: white;
-  padding: 1rem 1.5rem;
+  padding: 1rem 0px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 999;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  width: 100%;
 }
 .app-header .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 .app-header .logo {

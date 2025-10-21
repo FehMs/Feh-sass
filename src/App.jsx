@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import MetasGastos from './pages/MetasGastos';
+import BudgetPlanner from './pages/BudgetPlanner';
 
 export default function App() {
   return (
@@ -37,6 +38,18 @@ export default function App() {
               <ProtectedRoute>
                 <TransactionsProvider>
                   <DashboardPage />
+                </TransactionsProvider>
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/planner"
+            element={
+              <ProtectedRoute>
+                <TransactionsProvider>
+                  <Header/>
+                  <BudgetPlanner />
                 </TransactionsProvider>
               </ProtectedRoute>
             } 
