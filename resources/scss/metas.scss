@@ -186,6 +186,14 @@
 
   &--ok {
     border-color: rgba(16, 185, 129, 0.4);
+    @media (max-width: 768px){
+      .calendario-day-value--success{
+          display: none;
+      }
+      .calendario-day-count{
+          display: none;
+      }
+    }
   }
 
   &-number {

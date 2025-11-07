@@ -15,6 +15,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 15px;
 }
 @media (min-width: 1023px) {
   .app-header .header-container .menu__mobile {
@@ -152,7 +153,7 @@
 /* --- Estilos do Menu Mobile --- */
 .menu__mobile {
   cursor: pointer;
-  z-index: 1002; /* Garante que o ícone fique acima do overlay */
+  z-index: 1001; /* Garante que o ícone fique acima do overlay */
 }
 
 .menu {
@@ -160,7 +161,7 @@
   top: 0;
   left: 0;
   width: 280px;
-  height: 100%;
+  height: 100dvh;
   background-color: #1a1a2e;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
   transform: translateX(-100%);

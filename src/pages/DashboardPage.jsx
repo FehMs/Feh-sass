@@ -346,17 +346,16 @@ function TabelaTransacoes({ transacoes, onRemoverTransacao }) {
       <table className="transactions-table">
         <thead>
           <tr>
-            <th>Data</th>
             <th>Descrição</th>
             <th>Tipo</th>
             <th>Valor</th>
             <th>Ações</th>
+            <th>Data</th>
           </tr>
         </thead>
         <tbody>
           {transacoes.map((t) => (
             <tr key={t.id}>
-              <td>{new Date(t.data + "T03:00:00Z").toLocaleDateString("pt-BR", { timeZone: 'UTC' })}</td>
               <td>{t.descricao}</td>
               <td><span className={`transaction-badge transaction-badge--${t.tipo}`}>{t.tipo}</span></td>
               <td>{numberToBRL(t.valor)}</td>
@@ -369,6 +368,7 @@ function TabelaTransacoes({ transacoes, onRemoverTransacao }) {
                   &times;
                 </button>
               </td>
+              <td>{new Date(t.data + "T03:00:00Z").toLocaleDateString("pt-BR", { timeZone: 'UTC' })}</td>
             </tr>
           ))}
         </tbody>
